@@ -1,3 +1,4 @@
+
 import React, { useEffect, useMemo, useState } from 'react';
 import { BrowserRouter, Routes, Route, Link, NavLink, useNavigate, useLocation, useParams, Navigate } from 'react-router-dom';
 import {
@@ -11,6 +12,11 @@ import NearbyMechanicsMap from './components/NearbyMechanicsMap';
 import EmergencySOSButton from './components/EmergencySOSButton';
 import AdminDashboardView from './components/AdminDashboardView';
 import MechanicDashboardView from './components/MechanicDashboardView';
+import Tilt3DCard from './components/Tilt3DCard';
+import CarShowroom3D from './components/CarShowroom3D';
+import DispatchTracker3D from './components/DispatchTracker3D';
+import Vehicle3DPreview from './components/Vehicle3DPreview';
+import { Floating3DGear, Floating3DPiston } from './components/Floating3DToolBadge';
 
 const API = 'http://localhost:5000/api';
 
@@ -622,50 +628,69 @@ function HomePage({ user, mechanics, userLocation, locationStatus, locateUser, o
             </p>
           </div>
 
-          <div className="vp-hero-card">
-            <div className="vp-hero-card-header">
-              <h3 className="vp-hero-card-title">
-                <Wrench size={18} /> Instant Fault Diagnostic
-              </h3>
-              <span className="vp-hero-card-badge">
-                <CheckCircle2 size={12} /> 60-Sec Check
-              </span>
-            </div>
-            <div className="vp-hero-card-car">
-              <div className="vp-hero-card-car-icon">
-                <CarFront size={22} />
+          <Tilt3DCard className="vp-hero-card-3d-wrap" maxTilt={8} scale={1.015}>
+            <div className="vp-hero-card">
+              <div className="vp-hero-card-header">
+                <h3 className="vp-hero-card-title">
+                  <Wrench size={18} /> Instant Fault Diagnostic
+                </h3>
+                <span className="vp-hero-card-badge">
+                  <CheckCircle2 size={12} /> 60-Sec Check
+                </span>
               </div>
-              <div>
-                <strong>Any Vehicle Make & Model</strong>
-                <small>Select from 100+ car models in Bengaluru</small>
+              <div className="vp-hero-card-car">
+                <div className="vp-hero-card-car-icon">
+                  <CarFront size={22} />
+                </div>
+                <div>
+                  <strong>Any Vehicle Make & Model</strong>
+                  <small>Select from 100+ car models in Bengaluru</small>
+                </div>
+              </div>
+              <div className="vp-hero-symptoms">
+                <button className="vp-hero-symptom-btn" onClick={onCheckCar}>
+                  <span>Car won't start</span>
+                  <ArrowRight size={14} />
+                </button>
+                <button className="vp-hero-symptom-btn" onClick={onCheckCar}>
+                  <span>Warning light on</span>
+                  <ArrowRight size={14} />
+                </button>
+                <button className="vp-hero-symptom-btn" onClick={onCheckCar}>
+                  <span>Strange noise</span>
+                  <ArrowRight size={14} />
+                </button>
+                <button className="vp-hero-symptom-btn" onClick={onCheckCar}>
+                  <span>Flat tyre / Towing</span>
+                  <ArrowRight size={14} />
+                </button>
+              </div>
+              <div className="vp-hero-card-footer">
+                <span>Verified local estimates & causes</span>
+                <button className="vp-ghost-btn" onClick={onCheckCar}>
+                  Start guided check →
+                </button>
               </div>
             </div>
-            <div className="vp-hero-symptoms">
-              <button className="vp-hero-symptom-btn" onClick={onCheckCar}>
-                <span>Car won't start</span>
-                <ArrowRight size={14} />
-              </button>
-              <button className="vp-hero-symptom-btn" onClick={onCheckCar}>
-                <span>Warning light on</span>
-                <ArrowRight size={14} />
-              </button>
-              <button className="vp-hero-symptom-btn" onClick={onCheckCar}>
-                <span>Strange noise</span>
-                <ArrowRight size={14} />
-              </button>
-              <button className="vp-hero-symptom-btn" onClick={onCheckCar}>
-                <span>Flat tyre / Towing</span>
-                <ArrowRight size={14} />
-              </button>
-            </div>
-            <div className="vp-hero-card-footer">
-              <span>Verified local estimates & causes</span>
-              <button className="vp-ghost-btn" onClick={onCheckCar}>
-                Start guided check →
-              </button>
-            </div>
-          </div>
+          </Tilt3DCard>
         </div>
+      </section>
+
+      {/* Flagship Interactive 3D Vehicle Diagnostics Lab */}
+      <section className="vp-3d-showroom-section">
+        <div className="vp-section-head">
+          <span className="vp-kicker">INTERACTIVE 3D AUTO LAB</span>
+          <h2 className="vp-section-title">Explore Your Vehicle in Full 3D</h2>
+          <p className="vp-section-desc">
+            Rotate 360°, inspect parts with X-Ray Diagnostics, and tap glowing hotspots to identify issues and book repairs directly.
+          </p>
+        </div>
+        <CarShowroom3D
+          onSelectService={(serviceTitle) => {
+            navigate(`/booking?service=${encodeURIComponent(serviceTitle)}`);
+          }}
+          onCheckCar={onCheckCar}
+        />
       </section>
 
       {/* 2. Floating Search / Booking Panel - Valencia Pickup Style */}
@@ -764,28 +789,30 @@ function HomePage({ user, mechanics, userLocation, locationStatus, locateUser, o
           {serviceCatalog.map(service => {
             const Icon = service.icon;
             return (
-              <div className="vp-service-card" key={service.id}>
-                <div className="vp-service-card-top">
-                  <div className="vp-service-icon">
-                    <Icon size={24} />
+              <Tilt3DCard key={service.id} className="vp-service-card-3d-wrapper" maxTilt={10} scale={1.02}>
+                <div className="vp-service-card">
+                  <div className="vp-service-card-top">
+                    <div className="vp-service-icon">
+                      <Icon size={24} />
+                    </div>
+                    <span className="vp-service-price">{service.price}</span>
                   </div>
-                  <span className="vp-service-price">{service.price}</span>
+                  <h3>{service.title}</h3>
+                  <p>{service.desc}</p>
+                  <div className="vp-service-tags">
+                    {service.tags.map(tag => (
+                      <span key={tag}>{tag}</span>
+                    ))}
+                  </div>
+                  <button
+                    className="vp-btn"
+                    style={{ width: '100%', marginTop: 'auto' }}
+                    onClick={() => navigate(`/booking?service=${encodeURIComponent(service.title)}`)}
+                  >
+                    Book Service <ArrowRight size={14} />
+                  </button>
                 </div>
-                <h3>{service.title}</h3>
-                <p>{service.desc}</p>
-                <div className="vp-service-tags">
-                  {service.tags.map(tag => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
-                <button
-                  className="vp-btn"
-                  style={{ width: '100%', marginTop: 'auto' }}
-                  onClick={() => navigate(`/booking?service=${encodeURIComponent(service.title)}`)}
-                >
-                  Book Service <ArrowRight size={14} />
-                </button>
-              </div>
+              </Tilt3DCard>
             );
           })}
         </div>
@@ -799,28 +826,34 @@ function HomePage({ user, mechanics, userLocation, locationStatus, locateUser, o
           <p className="vp-section-desc">Booking your mechanic is simple, quick, and hassle-free.</p>
         </div>
         <div className="vp-how-grid">
-          <div className="vp-how-card">
-            <div className="vp-how-card-num">01</div>
-            <h3>Tell Us What You Need</h3>
-            <p>
-              Choose your automotive service, share your location, or tap Emergency SOS when immediate roadside dispatch
-              cannot wait.
-            </p>
-          </div>
-          <div className="vp-how-card">
-            <div className="vp-how-card-num">02</div>
-            <h3>Choose With Confidence</h3>
-            <p>
-              Compare verified nearby mechanics, driver ratings, estimated arrival minutes, and upfront fixed pricing.
-            </p>
-          </div>
-          <div className="vp-how-card">
-            <div className="vp-how-card-num">03</div>
-            <h3>Get Moving Again</h3>
-            <p>
-              Track your mechanic in real time from dispatched to completed, communicate seamlessly, and pay securely.
-            </p>
-          </div>
+          <Tilt3DCard className="vp-how-card-3d-wrapper" maxTilt={8} scale={1.02}>
+            <div className="vp-how-card">
+              <div className="vp-how-card-num">01</div>
+              <h3>Tell Us What You Need</h3>
+              <p>
+                Choose your automotive service, share your location, or tap Emergency SOS when immediate roadside dispatch
+                cannot wait.
+              </p>
+            </div>
+          </Tilt3DCard>
+          <Tilt3DCard className="vp-how-card-3d-wrapper" maxTilt={8} scale={1.02}>
+            <div className="vp-how-card">
+              <div className="vp-how-card-num">02</div>
+              <h3>Choose With Confidence</h3>
+              <p>
+                Compare verified nearby mechanics, driver ratings, estimated arrival minutes, and upfront fixed pricing.
+              </p>
+            </div>
+          </Tilt3DCard>
+          <Tilt3DCard className="vp-how-card-3d-wrapper" maxTilt={8} scale={1.02}>
+            <div className="vp-how-card">
+              <div className="vp-how-card-num">03</div>
+              <h3>Get Moving Again</h3>
+              <p>
+                Track your mechanic in real time from dispatched to completed, communicate seamlessly, and pay securely.
+              </p>
+            </div>
+          </Tilt3DCard>
         </div>
       </section>
 
@@ -841,43 +874,45 @@ function HomePage({ user, mechanics, userLocation, locationStatus, locateUser, o
           <div className="vp-directory-grid">
             <div className="vp-mechanic-list">
               {filteredMechanics.map(m => (
-                <article className="vp-mechanic-card" key={m.id}>
-                  <div className="vp-mechanic-photo-wrap">
-                    <img src={m.image} alt={m.name} />
-                    <span className={`vp-mechanic-status ${m.open ? 'online' : 'offline'}`}>
-                      <i /> {m.open ? 'Open Now' : 'Closed'}
-                    </span>
-                  </div>
-                  <div className="vp-mechanic-body">
-                    <div className="vp-mechanic-title-row">
-                      <h3>
-                        {m.name} {m.verified && <ShieldCheck size={16} color="#004f9c" />}
-                      </h3>
-                      <div className="vp-rating">
-                        <Star size={13} fill="currentColor" /> {m.rating} <span>({m.reviews})</span>
+                <Tilt3DCard key={m.id} className="vp-mechanic-card-3d-wrapper" maxTilt={6} scale={1.015}>
+                  <article className="vp-mechanic-card">
+                    <div className="vp-mechanic-photo-wrap">
+                      <img src={m.image} alt={m.name} />
+                      <span className={`vp-mechanic-status ${m.open ? 'online' : 'offline'}`}>
+                        <i /> {m.open ? 'Open Now' : 'Closed'}
+                      </span>
+                    </div>
+                    <div className="vp-mechanic-body">
+                      <div className="vp-mechanic-title-row">
+                        <h3>
+                          {m.name} {m.verified && <ShieldCheck size={16} color="#004f9c" />}
+                        </h3>
+                        <div className="vp-rating">
+                          <Star size={13} fill="currentColor" /> {m.rating} <span>({m.reviews})</span>
+                        </div>
+                      </div>
+                      <p className="vp-mechanic-specialty">{m.specialty} · {m.address}</p>
+                      <div className="vp-mechanic-meta">
+                        <span><MapPin size={13} /> {m.distance}</span>
+                        <span><Clock3 size={13} /> {m.minutes} mins away</span>
+                        <strong>{m.price}</strong>
+                      </div>
+                      <div className="vp-mechanic-services">
+                        {m.services.map(s => (
+                          <span key={s}>{s}</span>
+                        ))}
+                      </div>
+                      <div className="vp-mechanic-actions">
+                        <Link to={`/mechanics/${m.id}`} className="vp-ghost-btn">
+                          View profile <ArrowRight size={14} />
+                        </Link>
+                        <button className="vp-btn-sm" onClick={() => onBook(m)}>
+                          Book Mechanic
+                        </button>
                       </div>
                     </div>
-                    <p className="vp-mechanic-specialty">{m.specialty} · {m.address}</p>
-                    <div className="vp-mechanic-meta">
-                      <span><MapPin size={13} /> {m.distance}</span>
-                      <span><Clock3 size={13} /> {m.minutes} mins away</span>
-                      <strong>{m.price}</strong>
-                    </div>
-                    <div className="vp-mechanic-services">
-                      {m.services.map(s => (
-                        <span key={s}>{s}</span>
-                      ))}
-                    </div>
-                    <div className="vp-mechanic-actions">
-                      <Link to={`/mechanics/${m.id}`} className="vp-ghost-btn">
-                        View profile <ArrowRight size={14} />
-                      </Link>
-                      <button className="vp-btn-sm" onClick={() => onBook(m)}>
-                        Book Mechanic
-                      </button>
-                    </div>
-                  </div>
-                </article>
+                  </article>
+                </Tilt3DCard>
               ))}
             </div>
             <div className="vp-map-container">
@@ -897,26 +932,34 @@ function HomePage({ user, mechanics, userLocation, locationStatus, locateUser, o
           </p>
         </div>
         <div className="vp-trust-grid">
-          <div className="vp-trust-card">
-            <div className="vp-trust-icon"><ShieldCheck size={22} /></div>
-            <h3>People You Can Trust</h3>
-            <p>Every mechanic is background checked, identity verified, and rated by real drivers.</p>
-          </div>
-          <div className="vp-trust-card">
-            <div className="vp-trust-icon"><Gauge size={22} /></div>
-            <h3>Prices Made Clear</h3>
-            <p>See transparent visit fees and repair estimates before any physical work starts. Always.</p>
-          </div>
-          <div className="vp-trust-card">
-            <div className="vp-trust-icon"><Clock3 size={22} /></div>
-            <h3>Live Progress Tracking</h3>
-            <p>Know exactly where your mechanic is, from dispatched to diagnosed to back on the road.</p>
-          </div>
-          <div className="vp-trust-card">
-            <div className="vp-trust-icon"><Zap size={22} /></div>
-            <h3>24/7 Roadside SOS</h3>
-            <p>Instant broadcast dispatch to the nearest available mechanic when you need towing or jumpstarts.</p>
-          </div>
+          <Tilt3DCard className="vp-trust-card-3d-wrapper" maxTilt={8} scale={1.02}>
+            <div className="vp-trust-card">
+              <div className="vp-trust-icon"><ShieldCheck size={22} /></div>
+              <h3>People You Can Trust</h3>
+              <p>Every mechanic is background checked, identity verified, and rated by real drivers.</p>
+            </div>
+          </Tilt3DCard>
+          <Tilt3DCard className="vp-trust-card-3d-wrapper" maxTilt={8} scale={1.02}>
+            <div className="vp-trust-card">
+              <div className="vp-trust-icon"><Gauge size={22} /></div>
+              <h3>Prices Made Clear</h3>
+              <p>See transparent visit fees and repair estimates before any physical work starts. Always.</p>
+            </div>
+          </Tilt3DCard>
+          <Tilt3DCard className="vp-trust-card-3d-wrapper" maxTilt={8} scale={1.02}>
+            <div className="vp-trust-card">
+              <div className="vp-trust-icon"><Clock3 size={22} /></div>
+              <h3>Live Progress Tracking</h3>
+              <p>Know exactly where your mechanic is, from dispatched to diagnosed to back on the road.</p>
+            </div>
+          </Tilt3DCard>
+          <Tilt3DCard className="vp-trust-card-3d-wrapper" maxTilt={8} scale={1.02}>
+            <div className="vp-trust-card">
+              <div className="vp-trust-icon"><Zap size={22} /></div>
+              <h3>24/7 Roadside SOS</h3>
+              <p>Instant broadcast dispatch to the nearest available mechanic when you need towing or jumpstarts.</p>
+            </div>
+          </Tilt3DCard>
         </div>
       </section>
 
@@ -1100,6 +1143,12 @@ function BookingPage({ user, mechanics, onLogin, onPayment }) {
           <p className="vp-sub">Choose from 100+ popular car models in Bengaluru.</p>
           <VehicleSelector value={vehicle} onChange={setVehicle} />
 
+          <Vehicle3DPreview
+            vehicle={vehicle}
+            selectedIssue={form.issueType}
+            onSelectIssue={issue => setForm(prev => ({ ...prev, issueType: issue }))}
+          />
+
           <h2>2. Service & Problem Details</h2>
           <p className="vp-sub">Tell us what your vehicle needs.</p>
 
@@ -1275,6 +1324,15 @@ function BookingConfirmationPage({ mechanics }) {
         </span>
       </div>
 
+      {/* 3D Real-Time GPS Dispatch Radar */}
+      <DispatchTracker3D
+        mechanicName={booking.mechanicName || 'Indiranagar Auto Care'}
+        etaMinutes={12}
+        distanceKm="1.4 km"
+        statusText="Mechanic En Route to Your Location"
+        onCallMechanic={() => window.open('tel:+919876543210')}
+      />
+
       <div className="confirmation-card">
         <h2><CalendarDays size={20} color="#004f9c" /> Reservation Overview</h2>
         <div className="confirmation-grid">
@@ -1367,7 +1425,7 @@ function AppointmentsPage({ user, onLogin, onFind, onRate }) {
     if (user) {
       request('/bookings')
         .then(setBookings)
-        .catch(() => {})
+        .catch(() => { })
         .finally(() => setLoading(false));
     } else {
       setLoading(false);
@@ -1806,7 +1864,7 @@ function MechanicProfilePage({ mechanics, onBook }) {
         .catch(() => setMechanic(mechanics.find(m => m.id === id) || null));
       request(`/mechanics/${id}/reviews`)
         .then(setReviews)
-        .catch(() => {});
+        .catch(() => { });
     }
   }, [id, mechanics]);
 
@@ -1927,14 +1985,14 @@ function AdminPanel({ user, onLogout, toast, setToast }) {
   const tab = adminLocation.pathname.includes('/bookings')
     ? 'bookings'
     : adminLocation.pathname.includes('/mechanics')
-    ? 'mechanics'
-    : adminLocation.pathname.includes('/verification')
-    ? 'verification'
-    : adminLocation.pathname.includes('/customers')
-    ? 'customers'
-    : adminLocation.pathname.includes('/settings')
-    ? 'settings'
-    : 'overview';
+      ? 'mechanics'
+      : adminLocation.pathname.includes('/verification')
+        ? 'verification'
+        : adminLocation.pathname.includes('/customers')
+          ? 'customers'
+          : adminLocation.pathname.includes('/settings')
+            ? 'settings'
+            : 'overview';
 
   const setTab = next => adminNavigate(next === 'overview' ? '/admin' : `/admin/${next}`);
 
@@ -1945,7 +2003,7 @@ function AdminPanel({ user, onLogout, toast, setToast }) {
         setBookings(b);
         setMechanics(m);
       })
-      .catch(() => {});
+      .catch(() => { });
 
   useEffect(() => { refresh(); }, []);
 
@@ -2227,7 +2285,7 @@ function AdminMechanics({ mechanics, onAdd }) {
 
 function AdminCustomers() {
   const [customers, setCustomers] = useState([]);
-  useEffect(() => { request('/admin/customers').then(setCustomers).catch(() => {}); }, []);
+  useEffect(() => { request('/admin/customers').then(setCustomers).catch(() => { }); }, []);
   return (
     <div className="admin-content">
       <div className="admin-heading compact">
@@ -2276,7 +2334,7 @@ function AdminCustomers() {
 function AdminSettings({ onToast }) {
   const [form, setForm] = useState({ commissionRate: 12, platformFee: 90, emergencyRadiusKm: 15 });
   const [saving, setSaving] = useState(false);
-  useEffect(() => { request('/admin/settings').then(setForm).catch(() => {}); }, []);
+  useEffect(() => { request('/admin/settings').then(setForm).catch(() => { }); }, []);
 
   const save = async e => {
     e.preventDefault();
@@ -2284,7 +2342,7 @@ function AdminSettings({ onToast }) {
     try {
       await request('/admin/settings', { method: 'PATCH', body: JSON.stringify(form) });
       onToast('Platform settings saved successfully.');
-    } catch {} finally {
+    } catch { } finally {
       setSaving(false);
     }
   };
@@ -2336,7 +2394,7 @@ function AddMechanic({ onClose, onAdded }) {
     try {
       await request('/admin/mechanics', { method: 'POST', body: JSON.stringify({ name, address }) });
       onAdded();
-    } catch {}
+    } catch { }
   };
   return (
     <div className="modal-backdrop">

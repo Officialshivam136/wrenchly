@@ -2669,3 +2669,838 @@ td {
   color: #004f9c;
   font-weight: 700;
 }
+
+/* ==========================================================================
+   3D UI ELEMENTS, WEBGL SHOWROOM & PERSPECTIVE STYLES
+   ========================================================================== */
+
+/* 1. Reusable 3D Tilt Card */
+.tilt-3d-card {
+  transform-style: preserve-3d;
+  transition: transform 0.12s ease-out, box-shadow 0.25s ease;
+  will-change: transform;
+}
+.tilt-3d-card:hover {
+  box-shadow: 0 24px 50px rgba(0, 79, 156, 0.16);
+  z-index: 5;
+}
+.tilt-3d-card > * {
+  transform: translateZ(20px);
+  transform-style: preserve-3d;
+}
+.tilt-3d-glare {
+  pointer-events: none;
+}
+
+/* 2. Interactive 3D Car Showroom */
+.car-showroom-3d-wrap {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  background: radial-gradient(circle at 50% 40%, #0d1b33 0%, #060b14 100%);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+  margin-top: 10px;
+}
+.car-showroom-canvas-container {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+.car-showroom-canvas-container:active {
+  cursor: grabbing;
+}
+.car-showroom-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #93c5fd;
+  font-size: 13px;
+  font-weight: 600;
+  background: rgba(6, 11, 20, 0.85);
+  z-index: 20;
+}
+.loading-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(56, 189, 248, 0.2);
+  border-top-color: #38bdf8;
+  border-radius: 50%;
+  animation: spin3D 0.8s linear infinite;
+}
+@keyframes spin3D {
+  to { transform: rotate(360deg); }
+}
+
+/* Top bar of 3D Showroom */
+.car-showroom-topbar {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  right: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 15;
+}
+.car-showroom-title-badge {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 8px 14px;
+  border-radius: 30px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+.accent-pulse {
+  color: #38bdf8;
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1.15); filter: drop-shadow(0 0 6px #38bdf8); }
+}
+.car-showroom-mode-pills {
+  pointer-events: auto;
+  display: flex;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(12px);
+  padding: 4px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.mode-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  transition: all 0.2s ease;
+}
+.mode-pill:hover {
+  color: #ffffff;
+}
+.mode-pill.active {
+  background: #004f9c;
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 79, 156, 0.5);
+}
+.mode-pill.pulse-mode.active {
+  background: #0284c7;
+  animation: xRayPulse 2s infinite;
+}
+@keyframes xRayPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(2, 132, 199, 0.4); }
+  50% { box-shadow: 0 0 20px rgba(56, 189, 248, 0.8); }
+}
+
+/* 3D Hotspot Nodes Layer */
+.car-hotspots-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 12;
+}
+.hotspot-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+.hotspot-node:hover {
+  transform: translate(-50%, -50%) scale(1.2);
+}
+.hotspot-pulse {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid #38bdf8;
+  animation: hotspotRadar 2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  opacity: 0.8;
+}
+.hotspot-core {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #004f9c;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.8);
+  border: 2px solid #ffffff;
+}
+.hotspot-node.severity-urgent .hotspot-core {
+  background: #dc2626;
+  box-shadow: 0 0 14px rgba(220, 38, 38, 0.9);
+}
+.hotspot-node.severity-urgent .hotspot-pulse {
+  border-color: #ef4444;
+}
+.hotspot-node.severity-warning .hotspot-core {
+  background: #d97706;
+  box-shadow: 0 0 14px rgba(217, 119, 6, 0.9);
+}
+.hotspot-node.severity-warning .hotspot-pulse {
+  border-color: #f59e0b;
+}
+.hotspot-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.9);
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+.hotspot-node:hover .hotspot-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-3px);
+}
+@keyframes hotspotRadar {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* 3D Floating HUD Card */
+.car-showroom-hud-card {
+  position: absolute;
+  top: 76px;
+  right: 20px;
+  width: 320px;
+  background: rgba(10, 18, 32, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 16px;
+  padding: 18px;
+  color: #ffffff;
+  z-index: 25;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 79, 156, 0.25);
+  animation: hudSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes hudSlideIn {
+  from { opacity: 0; transform: translateX(20px) scale(0.96); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+.hud-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.08);
+}
+.hud-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+.hud-badge-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.hud-severity-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+.hud-severity-tag.severity-urgent {
+  background: rgba(220, 38, 38, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(220, 38, 38, 0.4);
+}
+.hud-severity-tag.severity-warning {
+  background: rgba(217, 119, 6, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(217, 119, 6, 0.4);
+}
+.hud-severity-tag.severity-normal,
+.hud-severity-tag.severity-attention {
+  background: rgba(14, 165, 233, 0.2);
+  color: #38bdf8;
+  border: 1px solid rgba(14, 165, 233, 0.4);
+}
+.hud-price {
+  font-size: 12px;
+  font-weight: 700;
+  color: #10b981;
+}
+.hud-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  color: #ffffff;
+}
+.hud-desc {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #cbd5e1;
+  margin: 0 0 12px 0;
+}
+.hud-symptoms-wrap {
+  margin-bottom: 14px;
+}
+.hud-label {
+  display: block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #94a3b8;
+  margin-bottom: 6px;
+}
+.hud-symptoms-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.symptom-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 2px 7px;
+  border-radius: 6px;
+  color: #e2e8f0;
+}
+.hud-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hud-book-btn {
+  width: 100%;
+  background: #004f9c;
+  justify-content: center;
+  font-size: 12px;
+  padding: 10px 14px;
+  box-shadow: 0 4px 15px rgba(0, 79, 156, 0.5);
+}
+.hud-book-btn:hover {
+  background: #0060be;
+}
+.hud-check-btn {
+  width: 100%;
+  font-size: 11px;
+  color: #93c5fd;
+  border-color: rgba(147, 197, 253, 0.3);
+  justify-content: center;
+  padding: 6px;
+}
+
+/* Bottom Showroom Controls */
+.car-showroom-controls {
+  position: absolute;
+  bottom: 18px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 15;
+}
+.color-palette-bar {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 6px 14px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.palette-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+}
+.color-dots {
+  display: flex;
+  gap: 8px;
+}
+.color-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.color-dot:hover {
+  transform: scale(1.15);
+}
+.color-dot.active {
+  border-color: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  transform: scale(1.2);
+}
+.showroom-toggles-bar {
+  pointer-events: auto;
+  display: flex;
+  gap: 8px;
+}
+.showroom-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  color: #cbd5e1;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.2s ease;
+}
+.showroom-action-btn:hover {
+  color: #ffffff;
+  background: rgba(30, 41, 59, 0.95);
+}
+.showroom-action-btn.active {
+  background: #004f9c;
+  color: #ffffff;
+  border-color: #38bdf8;
+}
+.car-showroom-hint {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* 3. 3D Live Dispatch Visualizer (Confirmation Page) */
+.dispatch-3d-wrap {
+  position: relative;
+  width: 100%;
+  height: 440px;
+  background: radial-gradient(circle at 50% 30%, #0a1730 0%, #030712 100%);
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  margin-bottom: 24px;
+}
+.dispatch-3d-canvas {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+.dispatch-3d-canvas:active {
+  cursor: grabbing;
+}
+.dispatch-hud-top {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 15;
+}
+.dispatch-live-badge {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: radarBlink 1.2s infinite;
+}
+@keyframes radarBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+.dispatch-view-modes {
+  pointer-events: auto;
+  display: flex;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 4px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.view-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #94a3b8;
+  transition: all 0.2s ease;
+}
+.view-pill:hover {
+  color: #ffffff;
+}
+.view-pill.active {
+  background: #004f9c;
+  color: #ffffff;
+}
+
+.dispatch-hud-telemetry {
+  position: absolute;
+  top: 60px;
+  left: 16px;
+  pointer-events: none;
+  z-index: 15;
+}
+.telemetry-card {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 8px 14px;
+  gap: 16px;
+}
+.telemetry-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.telemetry-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  font-weight: 700;
+}
+.telemetry-item strong {
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 800;
+}
+.telemetry-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.dispatch-hud-bottom {
+  position: absolute;
+  bottom: 14px;
+  left: 16px;
+  right: 16px;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 15;
+}
+.dispatch-progress-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mechanic-avatar-mini {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #004f9c;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #38bdf8;
+}
+.dispatch-progress-info strong {
+  display: block;
+  font-size: 13px;
+  color: #ffffff;
+}
+.dispatch-progress-info p {
+  margin: 0;
+  font-size: 11px;
+  color: #94a3b8;
+}
+.dispatch-progress-bar-wrap {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.dispatch-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #004f9c, #38bdf8);
+  border-radius: 6px;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 10px #38bdf8;
+}
+
+/* 4. 3D Vehicle Inspector (Booking Page) */
+.vehicle-3d-box {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(145deg, #0f1c33 0%, #080f1d 100%);
+  border: 1px solid rgba(0, 79, 156, 0.35);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 12px 30px rgba(0, 79, 156, 0.12);
+}
+.vehicle-3d-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.vehicle-3d-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #38bdf8;
+  letter-spacing: 0.6px;
+}
+.vehicle-3d-header h4 {
+  margin: 2px 0 0 0;
+  font-size: 15px;
+  color: #ffffff;
+}
+.vehicle-3d-reset {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.vehicle-3d-reset:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+.vehicle-3d-canvas-wrap {
+  width: 100%;
+  height: 260px;
+  cursor: grab;
+}
+.vehicle-3d-canvas-wrap:active {
+  cursor: grabbing;
+}
+.vehicle-3d-pins-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+.vehicle-part-pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  padding: 4px 10px;
+  border-radius: 20px;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease;
+}
+.vehicle-part-pin:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+  border-color: #38bdf8;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.8);
+}
+.vehicle-part-pin.active {
+  background: #004f9c;
+  border-color: #ffffff;
+  box-shadow: 0 0 18px rgba(0, 79, 156, 0.9);
+}
+.pin-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vehicle-part-pin.active .pin-dot {
+  background: #10b981;
+}
+.pin-text {
+  white-space: nowrap;
+}
+.vehicle-3d-footer {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #94a3b8;
+  text-align: center;
+}
+
+/* 5. Floating 3D Tool Accents */
+.floating-3d-gear {
+  display: inline-block;
+  animation: gearSpin linear infinite;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
+}
+@keyframes gearSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.floating-3d-piston {
+  display: inline-block;
+  animation: pistonFloat 3s ease-in-out infinite alternate;
+  filter: drop-shadow(0 8px 12px rgba(0, 79, 156, 0.25));
+}
+@keyframes pistonFloat {
+  0% { transform: translateY(0) rotate(-4deg); }
+  100% { transform: translateY(-8px) rotate(4deg); }
+}
+
+@media (max-width: 768px) {
+  .car-showroom-3d-wrap {
+    height: 440px;
+  }
+  .car-showroom-hud-card {
+    top: auto;
+    bottom: 80px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+  }
+  .car-showroom-controls {
+    flex-direction: column;
+    gap: 8px;
+    bottom: 12px;
+  }
+  .dispatch-3d-wrap {
+    height: 380px;
+  }
+  .telemetry-card {
+    padding: 6px 10px;
+    gap: 8px;
+  }
+  .vehicle-3d-canvas-wrap {
+    height: 220px;
+  }
+}
+
+/* Section & Card Wrappers for 3D integration */
+.vp-3d-showroom-section {
+  padding: 50px 5%;
+  background: var(--vp-soft);
+  border-top: 1px solid var(--vp-line);
+  border-bottom: 1px solid var(--vp-line);
+}
+
+.vp-service-card-3d-wrapper,
+.vp-mechanic-card-3d-wrapper,
+.vp-how-card-3d-wrapper,
+.vp-trust-card-3d-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--vp-radius);
+}
+
+.vp-service-card-3d-wrapper .vp-service-card,
+.vp-mechanic-card-3d-wrapper .vp-mechanic-card,
+.vp-how-card-3d-wrapper .vp-how-card,
+.vp-trust-card-3d-wrapper .vp-trust-card {
+  height: 100%;
+  margin: 0;
+}
