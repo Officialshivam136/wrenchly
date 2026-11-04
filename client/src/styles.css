@@ -1,0 +1,2671 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+:root {
+  --vp-primary: #004f9c;
+  --vp-primary-dark: #00366b;
+  --vp-primary-soft: #f0f6fc;
+  --vp-primary-glow: rgba(0, 79, 156, 0.16);
+  --vp-accent: #1479ff;
+  --vp-accent-light: #e6f1ff;
+  --vp-ink: #0f1b2d;
+  --vp-muted: #55637a;
+  --vp-line: #e2e8f0;
+  --vp-soft: #f8fafc;
+  --vp-bg: #ffffff;
+  --vp-card-bg: #ffffff;
+  --vp-gold: #d9941a;
+  --vp-green: #087f62;
+  --vp-green-soft: #e6f6f1;
+  --vp-red: #d93829;
+  --vp-red-soft: #fef2f2;
+  --vp-shadow: 0 10px 30px rgba(0, 79, 156, 0.08);
+  --vp-shadow-lg: 0 18px 45px rgba(15, 27, 45, 0.1);
+  --vp-radius: 12px;
+  --vp-radius-pill: 50px;
+}
+
+[data-theme='dark'] {
+  --vp-primary: #2575fc;
+  --vp-primary-dark: #195ed4;
+  --vp-primary-soft: #12213d;
+  --vp-primary-glow: rgba(37, 117, 252, 0.25);
+  --vp-accent: #38bdf8;
+  --vp-accent-light: #162a4a;
+  --vp-ink: #f1f5f9;
+  --vp-muted: #94a3b8;
+  --vp-line: #26354f;
+  --vp-soft: #101c31;
+  --vp-bg: #0b1323;
+  --vp-card-bg: #121e36;
+  --vp-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+  --vp-shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  color: var(--vp-ink);
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--vp-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, select, textarea { font: inherit; }
+button { border: 0; cursor: pointer; color: inherit; background: none; }
+a { text-decoration: none; color: inherit; cursor: pointer; }
+
+/* Top Announcement Notice Bar - Valencia Pickup Style */
+.vp-top-notice {
+  background: #004f9c;
+  color: #ffffff;
+  min-height: 40px;
+  padding: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 60;
+  position: relative;
+}
+.vp-top-notice a, .vp-top-notice span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #ffffff;
+}
+.vp-top-notice a:hover {
+  text-decoration: underline;
+}
+.vp-top-notice-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.vp-top-notice-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Header Navbar - Valencia Pickup Style */
+.vp-header {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  padding: 0 5%;
+  border-bottom: 1px solid var(--vp-line);
+  gap: 36px;
+  background: var(--vp-card-bg);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+.vp-brand {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 21px;
+  letter-spacing: -0.6px;
+  color: var(--vp-ink);
+}
+.vp-brand-mark {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #004f9c;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 79, 156, 0.3);
+}
+.vp-nav {
+  display: flex;
+  gap: 26px;
+  align-items: center;
+  flex: 1;
+}
+.vp-nav a, .vp-nav button {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--vp-muted);
+  padding: 26px 0;
+  position: relative;
+  transition: color 0.18s ease;
+  background: transparent;
+}
+.vp-nav a:hover, .vp-nav button:hover, .vp-nav a.active, .vp-nav button.active {
+  color: #004f9c;
+}
+.vp-nav a.active:after, .vp-nav button.active:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: #004f9c;
+}
+
+.vp-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.vp-btn, .vp-btn-secondary, .vp-btn-sm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  border-radius: var(--vp-radius-pill);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+.vp-btn {
+  background: #004f9c;
+  color: #ffffff;
+  padding: 13px 26px;
+  font-size: 14px;
+  box-shadow: 0 6px 18px rgba(0, 79, 156, 0.25);
+}
+.vp-btn:hover {
+  background: #003e7c;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 79, 156, 0.35);
+  color: #ffffff;
+}
+.vp-btn-secondary {
+  background: var(--vp-card-bg);
+  color: #004f9c;
+  border: 1.5px solid #004f9c;
+  padding: 12px 24px;
+  font-size: 14px;
+}
+.vp-btn-secondary:hover {
+  background: var(--vp-primary-soft);
+  transform: translateY(-2px);
+}
+.vp-btn-sm {
+  background: #004f9c;
+  color: #ffffff;
+  padding: 9px 18px;
+  font-size: 13px;
+}
+.vp-btn-sm:hover {
+  background: #003e7c;
+  transform: translateY(-1px);
+}
+.vp-sos-header-btn {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  padding: 8px 14px;
+  border-radius: var(--vp-radius-pill);
+  font-size: 12px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+.vp-sos-header-btn:hover {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+}
+
+/* Hero Section - Matching Valencia Pickup (vp-hero) */
+.vp-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f0f6fc 0%, #ffffff 75%);
+  padding: 70px 5% 90px;
+}
+[data-theme='dark'] .vp-hero {
+  background: linear-gradient(180deg, #0f1c33 0%, #0b1323 85%);
+}
+.vp-hero__inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.95fr);
+  gap: 50px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+.vp-hero__content {
+  max-width: 650px;
+}
+
+.vp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: #eaf3fd;
+  color: #004f9c;
+  border: 1px solid rgba(0, 79, 156, 0.2);
+  padding: 8px 16px;
+  border-radius: var(--vp-radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  margin-bottom: 22px;
+}
+[data-theme='dark'] .vp-badge {
+  background: rgba(37, 117, 252, 0.15);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.3);
+}
+.vp-badge svg {
+  color: #004f9c;
+}
+[data-theme='dark'] .vp-badge svg {
+  color: #38bdf8;
+}
+
+.vp-hero__title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(34px, 4.5vw, 52px);
+  line-height: 1.14;
+  letter-spacing: -1.6px;
+  margin: 0 0 16px;
+  color: var(--vp-ink);
+}
+.vp-accent {
+  color: #004f9c;
+  position: relative;
+  display: inline-block;
+}
+[data-theme='dark'] .vp-accent {
+  color: #38bdf8;
+}
+
+.vp-hero__subhead {
+  font-size: 19px;
+  font-weight: 700;
+  color: #004f9c;
+  margin: 0 0 15px;
+  letter-spacing: -0.3px;
+}
+[data-theme='dark'] .vp-hero__subhead {
+  color: #38bdf8;
+}
+.vp-hero__desc {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--vp-muted);
+  margin: 0 0 32px;
+  max-width: 530px;
+}
+
+/* Feature Check List - Valencia Pickup Style */
+.vp-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 36px;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.vp-features__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--vp-card-bg);
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--vp-line);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+.vp-features__icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: var(--vp-primary-soft);
+  color: #004f9c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+[data-theme='dark'] .vp-features__icon-wrap {
+  color: #38bdf8;
+}
+.vp-features__text strong {
+  display: block;
+  font-size: 13px;
+  color: var(--vp-ink);
+}
+.vp-features__text span {
+  display: block;
+  font-size: 11px;
+  color: var(--vp-muted);
+}
+
+.vp-hero__cta-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.vp-hero__tagline {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--vp-muted);
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vp-hero__tagline span {
+  color: #1479ff;
+  font-size: 14px;
+}
+
+/* Hero Right Side - Interactive Quick-Check Card */
+.vp-hero-card {
+  background: var(--vp-card-bg);
+  border: 1px solid var(--vp-line);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: var(--vp-shadow-lg);
+  position: relative;
+}
+.vp-hero-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--vp-line);
+  padding-bottom: 16px;
+  margin-bottom: 18px;
+}
+.vp-hero-card-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--vp-ink);
+}
+.vp-hero-card-badge {
+  background: var(--vp-green-soft);
+  color: var(--vp-green);
+  font-size: 10px;
+  font-weight: 800;
+  padding: 5px 10px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.vp-hero-card-car {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--vp-soft);
+  border: 1px solid var(--vp-line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+.vp-hero-card-car-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #004f9c;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.vp-hero-card-car strong {
+  display: block;
+  font-size: 14px;
+  color: var(--vp-ink);
+}
+.vp-hero-card-car small {
+  display: block;
+  font-size: 11px;
+  color: var(--vp-muted);
+}
+.vp-hero-symptoms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.vp-hero-symptom-btn {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--vp-line);
+  background: var(--vp-card-bg);
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--vp-ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.18s;
+}
+.vp-hero-symptom-btn:hover {
+  border-color: #004f9c;
+  background: var(--vp-primary-soft);
+  color: #004f9c;
+}
+.vp-hero-card-footer {
+  border-top: 1px solid var(--vp-line);
+  padding-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--vp-muted);
+}
+
+/* Floating Search / Booking Panel - Valencia Pickup Style */
+.vp-search-wrapper {
+  max-width: 1240px;
+  margin: -40px auto 60px;
+  padding: 0 5%;
+  position: relative;
+  z-index: 10;
+}
+.vp-search-panel {
+  background: var(--vp-card-bg);
+  border-radius: 16px;
+  border: 1px solid var(--vp-line);
+  box-shadow: 0 14px 40px rgba(0, 79, 156, 0.1);
+  padding: 24px;
+}
+.vp-search-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 0.9fr auto;
+  gap: 16px;
+  align-items: end;
+}
+.vp-field {
+  display: grid;
+  gap: 6px;
+}
+.vp-field label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--vp-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.vp-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.vp-input-wrap svg {
+  position: absolute;
+  left: 12px;
+  color: var(--vp-muted);
+  pointer-events: none;
+}
+.vp-field input, .vp-field select {
+  width: 100%;
+  height: 46px;
+  padding: 0 14px 0 38px;
+  border-radius: 10px;
+  border: 1px solid var(--vp-line);
+  background: var(--vp-card-bg);
+  color: var(--vp-ink);
+  font-size: 13px;
+  font-weight: 600;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+.vp-field input:focus, .vp-field select:focus {
+  border-color: #004f9c;
+  box-shadow: 0 0 0 3px rgba(0, 79, 156, 0.12);
+}
+.vp-search-filter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--vp-line);
+  margin-top: 18px;
+  padding-top: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.vp-filter-toggles {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.vp-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--vp-muted);
+  padding: 7px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--vp-line);
+  background: var(--vp-card-bg);
+  transition: all 0.18s;
+}
+.vp-toggle-btn.active {
+  background: #004f9c;
+  color: #ffffff;
+  border-color: #004f9c;
+}
+.vp-results-count {
+  font-size: 12px;
+  color: var(--vp-muted);
+}
+.vp-results-count strong {
+  color: var(--vp-ink);
+}
+
+/* Section Header Shared */
+.vp-section-head {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 46px;
+}
+.vp-kicker {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: #004f9c;
+  margin-bottom: 8px;
+  display: block;
+}
+[data-theme='dark'] .vp-kicker {
+  color: #38bdf8;
+}
+.vp-section-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(26px, 3.2vw, 36px);
+  letter-spacing: -1.2px;
+  margin: 0 0 14px;
+  color: var(--vp-ink);
+}
+.vp-section-desc {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--vp-muted);
+  margin: 0;
+}
+
+/* Services Section - Matching Valencia Pickup */
+.vp-services-section {
+  padding: 80px 5%;
+  background: var(--vp-soft);
+}
+.vp-services-grid {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+.vp-service-card {
+  background: var(--vp-card-bg);
+  border: 1px solid var(--vp-line);
+  border-radius: 16px;
+  padding: 28px;
+  transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+  display: flex;
+  flex-direction: column;
+}
+.vp-service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--vp-shadow-lg);
+  border-color: rgba(0, 79, 156, 0.3);
+}
+.vp-service-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 20px;
+}
+.vp-service-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--vp-primary-soft);
+  color: #004f9c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+[data-theme='dark'] .vp-service-icon {
+  color: #38bdf8;
+}
+.vp-service-price {
+  background: #f1f5f9;
+  color: #004f9c;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+[data-theme='dark'] .vp-service-price {
+  background: #1e293b;
+  color: #38bdf8;
+}
+.vp-service-card h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  margin: 0 0 10px;
+  color: var(--vp-ink);
+}
+.vp-service-card p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--vp-muted);
+  margin: 0 0 20px;
+  flex: 1;
+}
+.vp-service-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.vp-service-tags span {
+  font-size: 11px;
+  color: var(--vp-muted);
+  background: var(--vp-soft);
+  border: 1px solid var(--vp-line);
+  padding: 4px 9px;
+  border-radius: 6px;
+}
+
+/* How It Works Section - Valencia Pickup Style */
+.vp-how-section {
+  padding: 85px 5%;
+  background: var(--vp-card-bg);
+}
+.vp-how-grid {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+.vp-how-card {
+  position: relative;
+  background: var(--vp-soft);
+  border: 1px solid var(--vp-line);
+  border-radius: 18px;
+  padding: 34px 28px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.vp-how-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--vp-shadow);
+}
+.vp-how-card-num {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  color: #ffffff;
+  background: #004f9c;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 12px rgba(0, 79, 156, 0.25);
+}
+.vp-how-card h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  margin: 0 0 10px;
+  color: var(--vp-ink);
+}
+.vp-how-card p {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--vp-muted);
+  margin: 0;
+}
+
+/* Mechanics Directory & Map Grid */
+.vp-directory-section {
+  padding: 70px 5% 90px;
+  background: var(--vp-soft);
+}
+.vp-directory-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.vp-directory-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 28px;
+}
+.vp-directory-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.95fr);
+  gap: 28px;
+  align-items: start;
+}
+.vp-mechanic-list {
+  display: grid;
+  gap: 18px;
+}
+.vp-mechanic-card {
+  background: var(--vp-card-bg);
+  border: 1px solid var(--vp-line);
+  border-radius: 16px;
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.vp-mechanic-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--vp-shadow);
+}
+.vp-mechanic-photo-wrap {
+  height: 210px;
+  position: relative;
+  background: #e2e8f0;
+}
+.vp-mechanic-photo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.vp-mechanic-status {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--vp-green-soft);
+  color: var(--vp-green);
+  font-size: 10px;
+  font-weight: 800;
+  padding: 5px 9px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.vp-mechanic-status.offline {
+  background: #f1f5f9;
+  color: var(--vp-muted);
+}
+.vp-mechanic-status i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.vp-mechanic-body {
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+}
+.vp-mechanic-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 6px;
+}
+.vp-mechanic-title-row h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0;
+  color: var(--vp-ink);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.vp-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--vp-gold);
+  font-weight: 700;
+}
+.vp-rating span {
+  color: var(--vp-muted);
+  font-weight: 500;
+}
+.vp-mechanic-specialty {
+  font-size: 12px;
+  color: var(--vp-muted);
+  margin: 0 0 10px;
+}
+.vp-mechanic-meta {
+  display: flex;
+  gap: 14px;
+  font-size: 11px;
+  color: var(--vp-muted);
+  margin-bottom: 14px;
+}
+.vp-mechanic-meta span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.vp-mechanic-meta strong {
+  margin-left: auto;
+  color: #004f9c;
+  font-size: 12px;
+}
+.vp-mechanic-services {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.vp-mechanic-services span {
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: var(--vp-soft);
+  color: var(--vp-muted);
+  border: 1px solid var(--vp-line);
+}
+.vp-mechanic-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--vp-line);
+  padding-top: 14px;
+  margin-top: auto;
+}
+.vp-ghost-btn {
+  font-size: 12px;
+  font-weight: 700;
+  color: #004f9c;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.vp-ghost-btn:hover {
+  text-decoration: underline;
+}
+
+/* Map sticky container */
+.vp-map-container {
+  height: 520px;
+  border-radius: 16px;
+  border: 1px solid var(--vp-line);
+  overflow: hidden;
+  position: sticky;
+  top: 96px;
+  background: #e5edf5;
+  box-shadow: var(--vp-shadow);
+}
+
+/* Trust / Why Choose Us Section - Valencia Pickup Style */
+.vp-trust-section {
+  padding: 85px 5%;
+  background: var(--vp-card-bg);
+}
+.vp-trust-grid {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+.vp-trust-card {
+  background: var(--vp-soft);
+  border: 1px solid var(--vp-line);
+  border-radius: 16px;
+  padding: 28px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.vp-trust-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--vp-shadow);
+}
+.vp-trust-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--vp-primary-soft);
+  color: #004f9c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+[data-theme='dark'] .vp-trust-icon {
+  color: #38bdf8;
+}
+.vp-trust-card h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0 0 8px;
+  color: var(--vp-ink);
+}
+.vp-trust-card p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--vp-muted);
+  margin: 0;
+}
+
+/* Reviews / Testimonials Section */
+.vp-reviews-section {
+  padding: 80px 5%;
+  background: var(--vp-soft);
+}
+.vp-reviews-grid {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.vp-review-card {
+  background: var(--vp-card-bg);
+  border: 1px solid var(--vp-line);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+.vp-review-stars {
+  color: var(--vp-gold);
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+.vp-review-text {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--vp-ink);
+  margin: 0 0 20px;
+  font-style: italic;
+}
+.vp-review-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.vp-review-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #004f9c;
+  color: #fff;
+  font-weight: 800;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vp-review-author strong {
+  display: block;
+  font-size: 13px;
+  color: var(--vp-ink);
+}
+.vp-review-author small {
+  display: block;
+  font-size: 11px;
+  color: var(--vp-muted);
+}
+
+/* Pre-Footer Banner / Get in Touch - Matching Valencia Pickup */
+.vp-prefooter-banner {
+  background: linear-gradient(135deg, #004f9c 0%, #002d59 100%);
+  color: #ffffff;
+  padding: 70px 5%;
+  text-align: center;
+}
+.vp-prefooter-inner {
+  max-width: 740px;
+  margin: 0 auto;
+}
+.vp-prefooter-banner .vp-kicker {
+  color: #93c5fd;
+}
+.vp-prefooter-banner h2 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 3.5vw, 42px);
+  letter-spacing: -1.2px;
+  margin: 10px 0 16px;
+}
+.vp-prefooter-banner p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #dbeafe;
+  margin: 0 0 32px;
+}
+.vp-prefooter-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.vp-whatsapp-btn {
+  background: #25d366;
+  color: #ffffff;
+  padding: 13px 26px;
+  border-radius: var(--vp-radius-pill);
+  font-size: 14px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+  transition: all 0.2s;
+}
+.vp-whatsapp-btn:hover {
+  background: #1fae54;
+  transform: translateY(-2px);
+}
+.vp-white-btn {
+  background: #ffffff;
+  color: #004f9c;
+  padding: 13px 26px;
+  border-radius: var(--vp-radius-pill);
+  font-size: 14px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+.vp-white-btn:hover {
+  background: #f1f5f9;
+  transform: translateY(-2px);
+}
+
+/* Footer - Multi-Column Matching Valencia Pickup */
+.vp-footer {
+  background: #0a1424;
+  color: #94a3b8;
+  padding: 70px 5% 30px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.vp-footer a {
+  color: #cbd5e1;
+  transition: color 0.18s;
+}
+.vp-footer a:hover {
+  color: #38bdf8;
+}
+.vp-footer-grid {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr repeat(4, 1fr);
+  gap: 40px;
+  border-bottom: 1px solid #1e293b;
+  padding-bottom: 50px;
+}
+.vp-footer-brand h4 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.vp-footer-brand p {
+  margin: 0 0 20px;
+  max-width: 320px;
+}
+.vp-footer-col h5 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.vp-footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+.vp-footer-bottom {
+  max-width: 1240px;
+  margin: 30px auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #64748b;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* Standalone Dedicated Pages (Booking, Services, About, Contact, Appointments) */
+.vp-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 5% 90px;
+  min-height: 70vh;
+}
+.vp-page-hero {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 46px;
+}
+.vp-page-hero h1 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(30px, 4vw, 44px);
+  letter-spacing: -1.3px;
+  margin: 10px 0 14px;
+  color: var(--vp-ink);
+}
+.vp-page-hero p {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--vp-muted);
+  margin: 0;
+}
+
+/* Booking Page Form Flow - Valencia Pickup Style */
+.vp-booking-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(340px, 0.9fr);
+  gap: 36px;
+  align-items: start;
+}
+.vp-booking-card {
+  background: var(--vp-card-bg);
+  border: 1px solid var(--vp-line);
+  border-radius: 18px;
+  padding: 34px;
+  box-shadow: var(--vp-shadow);
+}
+.vp-booking-card h2 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 0 6px;
+  color: var(--vp-ink);
+}
+.vp-booking-card p.vp-sub {
+  font-size: 13px;
+  color: var(--vp-muted);
+  margin: 0 0 24px;
+}
+.vp-booking-summary-card {
+  background: var(--vp-card-bg);
+  border: 1px solid var(--vp-line);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: var(--vp-shadow);
+  position: sticky;
+  top: 96px;
+}
+.vp-summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--vp-line);
+  font-size: 13px;
+}
+.vp-summary-row.total {
+  border-bottom: 0;
+  padding-top: 18px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #004f9c;
+}
+[data-theme='dark'] .vp-summary-row.total {
+  color: #38bdf8;
+}
+
+/* Modals */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 20, 36, 0.65);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+.modal {
+  background: var(--vp-card-bg);
+  border-radius: 18px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.25);
+  position: relative;
+  width: 100%;
+  padding: 32px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  border: 1px solid var(--vp-line);
+}
+.modal-close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  color: var(--vp-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--vp-soft);
+}
+.modal-close:hover {
+  background: var(--vp-line);
+}
+
+/* Mobile App Bottom Nav */
+.mobile-app-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: var(--vp-card-bg);
+  border-top: 1px solid var(--vp-line);
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+  z-index: 45;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 10px;
+}
+.mobile-app-nav a, .mobile-app-nav button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--vp-muted);
+}
+.mobile-app-nav .active {
+  color: #004f9c;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  z-index: 120;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f1b2d;
+  color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  padding: 13px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.toast svg {
+  color: #10b981;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+  .vp-hero__inner { grid-template-columns: 1fr; }
+  .vp-search-grid { grid-template-columns: 1fr 1fr; }
+  .vp-directory-grid { grid-template-columns: 1fr; }
+  .vp-map-container { display: none; }
+  .vp-how-grid { grid-template-columns: 1fr; }
+  .vp-trust-grid { grid-template-columns: 1fr 1fr; }
+  .vp-reviews-grid { grid-template-columns: 1fr; }
+  .vp-footer-grid { grid-template-columns: 1fr 1fr; }
+  .vp-booking-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .vp-top-notice { font-size: 11px; padding: 6px 4%; }
+  .vp-top-notice-right { display: none; }
+  .vp-header { height: 64px; gap: 14px; padding: 0 4%; }
+  .vp-nav { display: none; }
+  .vp-header-actions .vp-btn-sm { display: none; }
+  .mobile-app-nav { display: flex; }
+  .vp-search-grid { grid-template-columns: 1fr; }
+  .vp-mechanic-card { grid-template-columns: 1fr; }
+  .vp-mechanic-photo-wrap { height: 160px; }
+  .vp-trust-grid { grid-template-columns: 1fr; }
+  .vp-footer-grid { grid-template-columns: 1fr; }
+  .modal { padding: 22px; }
+}
+
+
+/* =========================================================
+   COMPONENTS, ADMIN WORKSPACE, PROFILE & MODAL STYLES
+   ========================================================= */
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.text-center { text-align: center; }
+
+/* Header Profile & Actions */
+.icon-button {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: var(--vp-muted);
+  border: 1px solid var(--vp-line);
+  background: var(--vp-card-bg);
+  transition: all 0.18s;
+}
+.icon-button:hover {
+  background: var(--vp-soft);
+  color: #004f9c;
+}
+.login-link {
+  font-size: 14px;
+  font-weight: 700;
+  color: #004f9c;
+  padding: 8px 12px;
+}
+.login-link:hover { text-decoration: underline; }
+
+.profile-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  position: relative;
+  height: 76px;
+  cursor: pointer;
+}
+.avatar, .tiny-avatar {
+  border-radius: 50%;
+  background: #004f9c;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+.avatar { width: 34px; height: 34px; font-size: 12px; }
+.tiny-avatar { width: 26px; height: 26px; font-size: 10px; }
+.profile-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 70px;
+  background: var(--vp-card-bg);
+  border: 1px solid var(--vp-line);
+  box-shadow: var(--vp-shadow-lg);
+  border-radius: 12px;
+  padding: 8px;
+  width: 190px;
+  z-index: 55;
+}
+.profile-menu:hover .profile-dropdown { display: block; }
+.profile-dropdown button {
+  display: flex;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--vp-ink);
+}
+.profile-dropdown button:hover {
+  background: var(--vp-primary-soft);
+  color: #004f9c;
+}
+
+/* Appointments & Garage */
+.page-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 30px;
+}
+.page-intro h1 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+  margin: 6px 0 4px;
+}
+.guest-icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 20px;
+  background: var(--vp-primary-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.empty-state {
+  text-align: center;
+  border: 2px dashed var(--vp-line);
+  border-radius: 16px;
+  padding: 60px 20px;
+  color: var(--vp-muted);
+}
+.empty-state.large { padding: 80px 20px; }
+.empty-state h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 18px;
+  color: var(--vp-ink);
+  margin: 14px 0 6px;
+}
+.empty-state p { margin: 0; font-size: 13px; }
+.appointments-list {
+  border: 1px solid var(--vp-line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--vp-card-bg);
+  box-shadow: var(--vp-shadow);
+}
+.appointment-wrap {
+  border-bottom: 1px solid var(--vp-line);
+}
+.appointment-wrap:last-child { border-bottom: 0; }
+.appointment-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 24px;
+  width: 100%;
+  text-align: left;
+  transition: background 0.18s;
+}
+.appointment-row:hover, .appointment-wrap.expanded .appointment-row {
+  background: var(--vp-soft);
+}
+.appointment-date {
+  width: 54px;
+  height: 58px;
+  border-radius: 10px;
+  background: var(--vp-primary-soft);
+  color: #004f9c;
+  text-align: center;
+  padding: 8px 0;
+  flex: none;
+}
+.appointment-date b {
+  display: block;
+  font: 800 20px 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.1;
+}
+.appointment-date span {
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+.appointment-main { flex: 1; min-width: 0; }
+.appointment-main h3 {
+  font: 700 15px 'Plus Jakarta Sans', sans-serif;
+  margin: 0 0 4px;
+  color: var(--vp-ink);
+}
+.appointment-main p {
+  font-size: 12px;
+  color: var(--vp-muted);
+  margin: 0 0 6px;
+}
+.appointment-main span {
+  font-size: 11px;
+  color: var(--vp-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.status {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: capitalize;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.status.pending { background: #fef3c7; color: #92400e; }
+.status.accepted, .status.confirmed { background: #dbeafe; color: #1e40af; }
+.status.in-route, .status.in-progress { background: #e0e7ff; color: #3730a3; }
+.status.completed, .status.paid { background: #dcfce7; color: #166534; }
+.status.cancelled, .status.rejected { background: #fee2e2; color: #991b1b; }
+.status i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.more-button { color: var(--vp-muted); }
+
+/* Service Tracker */
+.service-tracker {
+  padding: 24px 30px;
+  background: var(--vp-soft);
+  border-top: 1px solid var(--vp-line);
+}
+.service-tracker .overline {
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  font-weight: 800;
+  color: #004f9c;
+  margin: 0 0 6px;
+}
+.service-tracker h3 {
+  font: 800 16px 'Plus Jakarta Sans', sans-serif;
+  margin: 0 0 6px;
+  color: var(--vp-ink);
+}
+.service-tracker p {
+  font-size: 13px;
+  color: var(--vp-muted);
+  margin: 0 0 20px;
+}
+.tracker-steps {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-top: 16px;
+}
+.tracker-steps > div {
+  position: relative;
+  text-align: center;
+  color: var(--vp-muted);
+}
+.tracker-steps > div:not(:last-child):after {
+  content: '';
+  position: absolute;
+  left: calc(50% + 14px);
+  right: calc(-50% + 14px);
+  top: 13px;
+  height: 2px;
+  background: var(--vp-line);
+}
+.tracker-steps > div.done:after { background: #004f9c; }
+.tracker-steps span {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--vp-card-bg);
+  border: 2px solid var(--vp-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  position: relative;
+  z-index: 2;
+  font-size: 11px;
+  font-weight: 800;
+}
+.tracker-steps .done span {
+  background: #004f9c;
+  border-color: #004f9c;
+  color: #ffffff;
+}
+.tracker-steps small {
+  display: block;
+  font-size: 10px;
+  text-transform: capitalize;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+/* Mechanic Profile Page */
+.profile-page {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 40px 5% 80px;
+}
+.profile-hero {
+  background: var(--vp-ink);
+  color: #ffffff;
+  border-radius: 18px;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  box-shadow: var(--vp-shadow);
+}
+.profile-hero > img {
+  width: 180px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.profile-eyebrow {
+  color: #38bdf8;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+.profile-hero h1 {
+  font: 800 28px 'Plus Jakarta Sans', sans-serif;
+  margin: 8px 0;
+}
+.profile-hero p {
+  color: #cbd5e1;
+  font-size: 13px;
+  margin: 0 0 10px;
+}
+.profile-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #f59e0b;
+  font-size: 13px;
+  font-weight: 700;
+}
+.profile-rating span { color: #94a3b8; font-weight: 400; }
+.profile-book { margin-left: auto; }
+.profile-columns {
+  display: grid;
+  grid-template-columns: 1fr 0.65fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+.profile-panel {
+  border: 1px solid var(--vp-line);
+  background: var(--vp-card-bg);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+.profile-panel h2 {
+  font: 700 17px 'Plus Jakarta Sans', sans-serif;
+  margin: 0 0 16px;
+  color: var(--vp-ink);
+}
+.profile-panel h2:not(:first-child) { margin-top: 28px; }
+.profile-panel p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--vp-muted);
+}
+.profile-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.profile-tags span {
+  border: 1px solid var(--vp-line);
+  background: var(--vp-soft);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--vp-ink);
+  font-weight: 600;
+}
+.profile-side { display: grid; gap: 20px; }
+.profile-side > div {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #004f9c;
+}
+.profile-side span { display: block; color: var(--vp-ink); }
+.profile-side b { display: block; font-size: 13px; }
+.profile-side small { display: block; font-size: 11px; color: var(--vp-muted); margin-top: 2px; }
+
+/* =========================================================
+   ADMIN CONSOLE STYLES
+   ========================================================= */
+.admin-shell {
+  min-height: 100vh;
+  display: flex;
+  background: #f8fafc;
+}
+[data-theme='dark'] .admin-shell { background: #0b1323; }
+.admin-sidebar {
+  width: 240px;
+  flex: none;
+  background: #0a1424;
+  color: #ffffff;
+  padding: 24px 14px;
+  display: flex;
+  flex-direction: column;
+}
+.admin-sidebar .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px 32px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 19px;
+  color: #fff;
+}
+.admin-sidebar .brand-mark {
+  background: #004f9c;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.admin-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  color: #64748b;
+  padding: 0 12px 10px;
+}
+.admin-sidebar > button, .sidebar-bottom > button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  color: #94a3b8;
+  padding: 11px 13px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  margin: 2px 0;
+  transition: all 0.18s;
+}
+.admin-sidebar > button:hover, .sidebar-bottom > button:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+.admin-sidebar > button.active {
+  background: #004f9c;
+  color: #ffffff;
+}
+.admin-sidebar > button b {
+  margin-left: auto;
+  background: #38bdf8;
+  color: #0f172a;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 10px;
+}
+.sidebar-bottom {
+  margin-top: auto;
+  border-top: 1px solid #1e293b;
+  padding-top: 16px;
+}
+.admin-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 8px 0;
+  border-top: 1px solid #1e293b;
+  margin-top: 12px;
+}
+.admin-user .avatar { background: #1e293b; }
+.admin-user div { flex: 1; min-width: 0; }
+.admin-user b { display: block; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.admin-user small { display: block; font-size: 10px; color: #94a3b8; }
+
+.admin-main { flex: 1; min-width: 0; }
+.admin-topbar {
+  height: 68px;
+  background: var(--vp-card-bg);
+  border-bottom: 1px solid var(--vp-line);
+  display: flex;
+  align-items: center;
+  padding: 0 4%;
+  justify-content: space-between;
+}
+.admin-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--vp-muted);
+}
+.admin-breadcrumb b { color: var(--vp-ink); }
+.admin-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 36px 4% 60px;
+}
+.admin-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+.admin-heading h1 {
+  font: 800 28px 'Plus Jakarta Sans', sans-serif;
+  margin: 6px 0 4px;
+}
+.admin-heading p { color: var(--vp-muted); margin: 0; font-size: 13px; }
+.export-button {
+  border: 1px solid var(--vp-line);
+  border-radius: 8px;
+  color: var(--vp-ink);
+  padding: 9px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--vp-card-bg);
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 26px;
+}
+.stat-card {
+  background: var(--vp-card-bg);
+  border: 1px solid var(--vp-line);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  gap: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+.stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.stat-icon.blue { background: #e0f2fe; color: #0284c7; }
+.stat-icon.mint { background: #dcfce7; color: #16a34a; }
+.stat-icon.orange { background: #fef3c7; color: #d97706; }
+.stat-icon.purple { background: #f3e8ff; color: #9333ea; }
+.stat-card p { color: var(--vp-muted); font-size: 11px; margin: 0 0 6px; font-weight: 600; text-transform: uppercase; }
+.stat-card strong { font: 800 24px 'Plus Jakarta Sans', sans-serif; display: block; color: var(--vp-ink); }
+.stat-card small { font-size: 11px; color: var(--vp-muted); margin-top: 4px; display: block; }
+
+.admin-columns {
+  display: grid;
+  grid-template-columns: 1.35fr 0.85fr;
+  gap: 20px;
+}
+.panel {
+  background: var(--vp-card-bg);
+  border: 1px solid var(--vp-line);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+.panel-header {
+  padding: 20px 22px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+.panel-header h2 { font: 700 15px 'Plus Jakarta Sans', sans-serif; margin: 0 0 4px; color: var(--vp-ink); }
+.panel-header p { font-size: 11px; color: var(--vp-muted); margin: 0; }
+.text-button {
+  color: #004f9c;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 12px; }
+th {
+  text-align: left;
+  color: var(--vp-muted);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  border-top: 1px solid var(--vp-line);
+  border-bottom: 1px solid var(--vp-line);
+  background: var(--vp-soft);
+}
+td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--vp-line);
+  color: var(--vp-ink);
+}
+.table-person { display: flex; align-items: center; gap: 10px; }
+.table-person b { display: block; font-size: 12px; }
+.table-person small { display: block; font-size: 10px; color: var(--vp-muted); margin-top: 2px; }
+.table-empty { text-align: center; padding: 40px; color: var(--vp-muted); }
+
+/* Chart Mock */
+.chart {
+  height: 180px;
+  margin: 10px 20px 10px;
+  display: flex;
+  position: relative;
+}
+.chart-labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #94a3b8;
+  font-size: 10px;
+  padding-right: 12px;
+}
+.chart-area {
+  flex: 1;
+  border-bottom: 1px solid var(--vp-line);
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 34px, var(--vp-line) 35px);
+  position: relative;
+}
+.chart-line {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 79, 156, 0.25) 0%, transparent 80%);
+  clip-path: polygon(0 60%, 15% 45%, 30% 70%, 45% 35%, 60% 50%, 75% 20%, 90% 40%, 100% 15%, 100% 100%, 0 100%);
+}
+.chart-tooltip {
+  position: absolute;
+  right: 14%;
+  top: 16px;
+  background: #0f1b2d;
+  color: #fff;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 11px;
+}
+.chart-tooltip small { display: block; font-size: 9px; color: #94a3b8; }
+.chart-dot {
+  position: absolute;
+  right: 14%;
+  top: 54px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #004f9c;
+  border: 2px solid #fff;
+}
+.chart-legend {
+  display: flex;
+  gap: 16px;
+  padding: 10px 22px 18px;
+  color: var(--vp-muted);
+  font-size: 11px;
+}
+.chart-legend span { display: flex; align-items: center; gap: 6px; }
+.blue-dot { width: 8px; height: 8px; border-radius: 50%; background: #004f9c; }
+.orange-dot { width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; }
+
+.mechanic-admin-grid {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+.mechanic-admin-card {
+  border: 1px solid var(--vp-line);
+  border-radius: 12px;
+  padding: 18px;
+  background: var(--vp-card-bg);
+}
+.admin-mechanic-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mechanic-initials {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+}
+.availability {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: #dcfce7;
+  color: #166534;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.availability.closed { background: #f1f5f9; color: #64748b; }
+.availability i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.mechanic-admin-card h3 { font: 700 15px 'Plus Jakarta Sans', sans-serif; margin: 12px 0 4px; }
+.mechanic-admin-card p { font-size: 12px; color: var(--vp-muted); margin: 0 0 10px; }
+.admin-rating { display: flex; align-items: center; gap: 4px; font-size: 12px; color: #f59e0b; }
+.admin-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--vp-line);
+  margin-top: 12px;
+  padding-top: 10px;
+  font-size: 11px;
+  color: var(--vp-muted);
+}
+
+.settings-panel {
+  max-width: 600px;
+  background: var(--vp-card-bg);
+  border: 1px solid var(--vp-line);
+  border-radius: 14px;
+  padding: 26px;
+  display: grid;
+  gap: 20px;
+}
+.settings-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--vp-line);
+}
+.settings-field label { font-size: 13px; font-weight: 700; color: var(--vp-ink); }
+.settings-field label span { display: block; font-size: 11px; font-weight: 400; color: var(--vp-muted); margin-top: 2px; }
+.settings-field > div { display: flex; align-items: center; gap: 8px; }
+.settings-field input {
+  width: 72px;
+  padding: 8px 10px;
+  border: 1px solid var(--vp-line);
+  border-radius: 6px;
+  text-align: right;
+  font-weight: 700;
+}
+
+/* Fault Checker Modal Styling */
+.fault-checker-modal { max-width: 480px; }
+.modal-kicker {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #004f9c;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.checker-progress {
+  display: flex;
+  gap: 6px;
+  margin: 14px 0 20px;
+}
+.checker-progress span {
+  height: 4px;
+  flex: 1;
+  border-radius: 4px;
+  background: var(--vp-line);
+}
+.checker-progress span.active { background: #004f9c; }
+.symptom-options {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+.symptom-options button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--vp-line);
+  border-radius: 12px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--vp-ink);
+  transition: all 0.18s;
+}
+.symptom-options button:hover, .symptom-options button.selected {
+  border-color: #004f9c;
+  background: var(--vp-primary-soft);
+  color: #004f9c;
+}
+.symptom-options button svg:last-child { margin-left: auto; }
+.option-dot {
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--vp-muted);
+  border-radius: 50%;
+}
+.report-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--vp-muted);
+  margin-bottom: 12px;
+}
+.report-status {
+  background: #dcfce7;
+  color: #166534;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.report-status i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.checker-urgency {
+  background: #fef3c7;
+  color: #92400e;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px 0;
+}
+.likely-causes {
+  border: 1px solid var(--vp-line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.likely-causes p { font-size: 10px; letter-spacing: 1.2px; font-weight: 800; color: #004f9c; margin: 0 0 10px; }
+.likely-causes > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid var(--vp-line);
+  font-size: 12px;
+}
+.likely-causes > div:first-of-type { border-top: 0; }
+.likely-causes b {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--vp-primary-soft);
+  color: #004f9c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+.likely-causes small { margin-left: auto; color: var(--vp-muted); }
+.checker-guidance { font-size: 12px; line-height: 1.6; color: var(--vp-muted); margin: 0 0 20px; }
+.checker-back {
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: #004f9c;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 12px;
+}
+
+/* Modals Shared */
+.auth-modal, .booking-modal, .payment-modal { max-width: 440px; }
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--vp-ink);
+  margin-bottom: 16px;
+}
+.modal h2 {
+  font: 800 24px 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: -0.8px;
+  margin: 0 0 6px;
+  color: var(--vp-ink);
+}
+.modal-sub {
+  font-size: 13px;
+  color: var(--vp-muted);
+  margin: 0 0 20px;
+}
+.modal form { display: grid; gap: 14px; }
+.modal label {
+  display: grid;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--vp-muted);
+}
+.modal input, .modal select, .modal textarea {
+  width: 100%;
+  padding: 11px 13px;
+  border-radius: 9px;
+  border: 1px solid var(--vp-line);
+  background: var(--vp-card-bg);
+  color: var(--vp-ink);
+  font-size: 13px;
+  outline: none;
+}
+.modal input:focus, .modal select:focus, .modal textarea:focus {
+  border-color: #004f9c;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-error {
+  padding: 10px 14px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  border-radius: 8px;
+  font-size: 12px;
+}
+.auth-switch {
+  text-align: center;
+  font-size: 12px;
+  color: var(--vp-muted);
+  margin-top: 16px;
+}
+.auth-switch button { color: #004f9c; font-weight: 700; }
+.admin-demo-link {
+  font-size: 11px;
+  color: #004f9c;
+  text-align: center;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* Payment Summary */
+.payment-summary {
+  border: 1px solid var(--vp-line);
+  border-radius: 12px;
+  padding: 16px;
+  display: grid;
+  gap: 6px;
+  background: var(--vp-soft);
+  margin-bottom: 16px;
+}
+.payment-summary span { font-size: 12px; color: var(--vp-muted); }
+.payment-summary b { font-size: 14px; color: var(--vp-ink); }
+.payment-summary strong { font: 800 24px 'Plus Jakarta Sans', sans-serif; color: #004f9c; }
+.payment-provider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #166534;
+  background: #dcfce7;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
+
+/* Install Prompt PWA */
+.install-prompt {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--vp-card-bg);
+  border: 1px solid var(--vp-line);
+  border-radius: 14px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.15);
+}
+.install-prompt-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #004f9c;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.install-prompt strong { display: block; font-size: 12px; }
+.install-prompt small { display: block; font-size: 10px; color: var(--vp-muted); }
+.install-prompt button:not(.install-dismiss) {
+  background: #004f9c;
+  color: #fff;
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.install-dismiss { color: var(--vp-muted); }
+
+
+/* =========================================================
+   VEHICLE SELECTOR, CONFIRMATION PAGE & REVIEW SYSTEM STYLES
+   ========================================================= */
+
+/* Vehicle Selector */
+.vehicle-selector-wrap {
+  margin-bottom: 22px;
+}
+.popular-car-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 10px 0 16px;
+}
+.popular-car-chip {
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--vp-line);
+  background: var(--vp-soft);
+  color: var(--vp-ink);
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.18s;
+  cursor: pointer;
+}
+.popular-car-chip:hover, .popular-car-chip.active {
+  background: #004f9c;
+  color: #ffffff;
+  border-color: #004f9c;
+}
+.vehicle-grid-inputs {
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 768px) {
+  .vehicle-grid-inputs {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Booking Confirmation Page */
+.confirmation-container {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 40px 5% 80px;
+}
+.confirmation-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.confirmation-check-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #dcfce7;
+  color: #166534;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+  box-shadow: 0 8px 24px rgba(22, 101, 52, 0.2);
+}
+.confirmation-header h1 {
+  font: 800 clamp(26px, 3.5vw, 36px) 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: -1px;
+  margin: 0 0 8px;
+  color: var(--vp-ink);
+}
+.confirmation-header p {
+  color: var(--vp-muted);
+  font-size: 15px;
+  margin: 0 0 14px;
+}
+.confirmation-ref-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--vp-primary-soft);
+  color: #004f9c;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+  border: 1px solid rgba(0, 79, 156, 0.2);
+}
+
+.confirmation-card {
+  background: var(--vp-card-bg);
+  border: 1px solid var(--vp-line);
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: var(--vp-shadow);
+  margin-bottom: 24px;
+}
+.confirmation-card h2 {
+  font: 700 18px 'Plus Jakarta Sans', sans-serif;
+  margin: 0 0 18px;
+  color: var(--vp-ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.confirmation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 768px) {
+  .confirmation-grid { grid-template-columns: 1fr; }
+}
+.confirmation-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.confirmation-info-item span {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--vp-muted);
+}
+.confirmation-info-item strong {
+  font-size: 14px;
+  color: var(--vp-ink);
+}
+.confirmation-info-item small {
+  color: var(--vp-muted);
+  font-size: 12px;
+}
+
+/* Timeline */
+.confirmation-timeline {
+  display: grid;
+  gap: 16px;
+  margin: 18px 0 0;
+  border-left: 2px solid var(--vp-line);
+  padding-left: 20px;
+  position: relative;
+}
+.confirmation-timeline-step {
+  position: relative;
+}
+.confirmation-timeline-step:before {
+  content: '';
+  position: absolute;
+  left: -27px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #004f9c;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px #004f9c;
+}
+.confirmation-timeline-step.done:before {
+  background: #10b981;
+  box-shadow: 0 0 0 2px #10b981;
+}
+.confirmation-timeline-step strong {
+  display: block;
+  font-size: 13px;
+  color: var(--vp-ink);
+}
+.confirmation-timeline-step p {
+  font-size: 12px;
+  color: var(--vp-muted);
+  margin: 2px 0 0;
+}
+
+.confirmation-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+/* Rate & Review System */
+.review-modal {
+  max-width: 480px;
+}
+.star-rating-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 18px 0 10px;
+}
+.star-rating-btn {
+  background: transparent;
+  padding: 6px;
+  cursor: pointer;
+  transition: transform 0.15s;
+  color: #cbd5e1;
+}
+.star-rating-btn:hover {
+  transform: scale(1.15);
+}
+.star-rating-btn.active {
+  color: #f59e0b;
+}
+.star-rating-label {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: #d97706;
+  margin-bottom: 18px;
+}
+.compliment-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.compliment-chip {
+  padding: 7px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--vp-line);
+  background: var(--vp-card-bg);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--vp-ink);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.compliment-chip:hover, .compliment-chip.selected {
+  background: #eaf3fd;
+  border-color: #004f9c;
+  color: #004f9c;
+}
+.reviewed-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fef3c7;
+  color: #92400e;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+/* Mechanic Reviews Showcase */
+.mechanic-reviews-container {
+  margin-top: 24px;
+  border-top: 1px solid var(--vp-line);
+  padding-top: 24px;
+}
+.review-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+}
+.review-card-item {
+  background: var(--vp-soft);
+  border: 1px solid var(--vp-line);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.review-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.review-card-top strong {
+  font-size: 13px;
+  color: var(--vp-ink);
+}
+.review-card-top small {
+  color: var(--vp-muted);
+  font-size: 11px;
+}
+.review-card-comment {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--vp-ink);
+  margin: 6px 0;
+}
+.review-card-compliments {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.review-card-compliments span {
+  font-size: 10px;
+  background: #ffffff;
+  border: 1px solid var(--vp-line);
+  padding: 3px 8px;
+  border-radius: 12px;
+  color: #004f9c;
+  font-weight: 700;
+}
