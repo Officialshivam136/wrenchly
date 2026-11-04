@@ -6,7 +6,7 @@ import {
   Filter, Gauge, Heart, LayoutDashboard, ListFilter, LockKeyhole, LogOut, MapPin, Moon, Sun,
   Menu, MessageCircle, MoreHorizontal, Plus, Search, Settings, ShieldCheck, SlidersHorizontal,
   Download, Sparkles, Star, PenTool, UserRound, Users, X, Wrench, Zap, Phone, AlertTriangle,
-  FileText, CheckCircle2, Navigation, Award, Fuel, BatteryCharging, Printer, ThumbsUp
+  FileText, CheckCircle2, Navigation, Award, Fuel, BatteryCharging, Printer, ThumbsUp, Activity
 } from 'lucide-react';
 import NearbyMechanicsMap from './components/NearbyMechanicsMap';
 import EmergencySOSButton from './components/EmergencySOSButton';
@@ -364,6 +364,17 @@ function TopNoticeBar() {
 // Header - Valencia Pickup Style
 function Header({ user, theme, onToggleTheme, onCheckCar, onLogin, onLogout }) {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleScrollTo = (id) => {
+    if (location.pathname === '/') {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate(`/#${id}`);
+    }
+  };
+
   return (
     <header className="vp-header">
       <Link to="/" className="vp-brand">
@@ -376,20 +387,23 @@ function Header({ user, theme, onToggleTheme, onCheckCar, onLogin, onLogout }) {
         <NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')}>
           Home
         </NavLink>
+        <button type="button" onClick={() => handleScrollTo('how-it-works')}>
+          How it works
+        </button>
+        <button type="button" onClick={() => handleScrollTo('features')}>
+          What you get
+        </button>
+        <button type="button" onClick={() => handleScrollTo('mechanics-directory')}>
+          Find Mechanics
+        </button>
+        <button type="button" onClick={() => handleScrollTo('reviews')}>
+          What people say
+        </button>
         <NavLink to="/booking" className={({ isActive }) => (isActive ? 'active' : '')}>
-          Booking
+          Book a Repair
         </NavLink>
-        <NavLink to="/services" className={({ isActive }) => (isActive ? 'active' : '')}>
-          Services
-        </NavLink>
-        <NavLink to="/how-it-works" className={({ isActive }) => (isActive ? 'active' : '')}>
-          How It Works
-        </NavLink>
-        <NavLink to="/about" className={({ isActive }) => (isActive ? 'active' : '')}>
-          About Us
-        </NavLink>
-        <NavLink to="/contact" className={({ isActive }) => (isActive ? 'active' : '')}>
-          Contact Us
+        <NavLink to="/appointments" className={({ isActive }) => (isActive ? 'active' : '')}>
+          My Garage
         </NavLink>
       </nav>
       <div className="vp-header-actions">
@@ -430,8 +444,8 @@ function Header({ user, theme, onToggleTheme, onCheckCar, onLogin, onLogout }) {
             <button className="login-link" onClick={onLogin}>
               Sign in
             </button>
-            <button className="vp-btn-sm" onClick={() => navigate('/booking')}>
-              Book Now <ArrowRight size={14} />
+            <button className="btn btn-primary" onClick={onCheckCar}>
+              Get Free Report <ArrowRight size={14} />
             </button>
           </>
         )}
@@ -549,7 +563,7 @@ function VehicleSelector({ value, onChange }) {
   );
 }
 
-// Home Page (Valencia Pickup Style)
+// Home Page — Authentic Wrenchly.co.uk Experience
 function HomePage({ user, mechanics, userLocation, locationStatus, locateUser, onCheckCar, onBook, onSOS }) {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
@@ -558,6 +572,34 @@ function HomePage({ user, mechanics, userLocation, locationStatus, locateUser, o
   const [radius, setRadius] = useState('15');
   const [openOnly, setOpenOnly] = useState(false);
   const [showAllMechanics, setShowAllMechanics] = useState(false);
+  const [reviewIndex, setReviewIndex] = useState(0);
+
+  const driverReviews = [
+    {
+      stars: '★★★★★',
+      text: 'My car was making a loud whining noise from the engine whenever accelerating. Wrenchly identified the alternator bearing in 40 seconds. The mobile mechanic came to Indiranagar and replaced it at the exact price quoted.',
+      name: 'Priya Sharma',
+      location: 'Indiranagar, Bengaluru · Hyundai Creta'
+    },
+    {
+      stars: '★★★★★',
+      text: 'Avoided a ₹12,000 scam quote from an unauthorized garage. Wrenchly diagnosed a simple blown fuse rather than an entire steering module failure. Booked Indiranagar Auto Care and paid just ₹750.',
+      name: 'Rahul Menon',
+      location: 'Koramangala, Bengaluru · Tata Nexon'
+    },
+    {
+      stars: '★★★★★',
+      text: 'The 3D vehicle inspector is mind-blowing. Tapping on the front brake pads gave me instant warning symptoms and allowed me to order ceramic replacement pads doorstep in Whitefield.',
+      name: 'Ananya Kulkarni',
+      location: 'Whitefield, Bengaluru · Maruti Brezza'
+    },
+    {
+      stars: '★★★★★',
+      text: 'Battery died completely on the Outer Ring Road. Used Emergency SOS, verified the fault cause on my phone, and technician arrived in 14 minutes with jumpstart gear.',
+      name: 'Karthik Rao',
+      location: 'Bellandur, Bengaluru · Mahindra XUV700'
+    }
+  ];
 
   const filteredMechanics = useMemo(() => {
     return mechanics.filter(m => {
@@ -570,308 +612,451 @@ function HomePage({ user, mechanics, userLocation, locationStatus, locateUser, o
 
   return (
     <main>
-      {/* 1. Flagship Hero Section - Valencia Pickup Style */}
-      <section className="vp-hero">
-        <div className="vp-hero__inner">
-          <div className="vp-hero__content">
-            <div className="vp-badge">
-              <ShieldCheck size={16} />
-              Bengaluru's Most Trusted Auto Care Network
+      {/* 1. Authentic Wrenchly.co.uk Hero Section */}
+      <section className="wrenchly-hero">
+        <div className="hero-inner">
+          <div className="hero-pill">
+            <Sparkles size={14} className="accent-pulse" /> Free AI Car Fault Diagnosis & AI Mechanic
+          </div>
+          <h1>
+            Know what's wrong with your car <br />
+            <span className="teal">before you book a repair.</span>
+          </h1>
+          <p className="hero-sub">
+            A free AI mechanic for drivers. Answer guided questions and get an AI car diagnosis report with ranked
+            likely causes, urgency and fair repair costs. No account needed.
+          </p>
+          <div className="hero-btns">
+            <button className="btn btn-primary btn-xl" onClick={onCheckCar}>
+              Get Free Diagnostic Report <ArrowRight size={16} />
+            </button>
+            <button className="btn btn-dark btn-xl" onClick={() => navigate('/booking')}>
+              Book a Vetted Mechanic <Wrench size={16} />
+            </button>
+          </div>
+          <div className="hero-trust">
+            <div className="trust-item">
+              <div className="trust-icon">
+                <ShieldCheck size={16} />
+              </div>
+              <span>Free and instant</span>
             </div>
-            <h1 className="vp-hero__title">
-              Your Reliable Car Repair & Service in <span className="vp-accent">Bengaluru</span>
-            </h1>
-            <p className="vp-hero__subhead">Safe. Transparent. Always on time.</p>
-            <p className="vp-hero__desc">
-              Professional on-demand car mechanics and instant roadside assistance across Bengaluru and beyond.
-              Engine diagnostics, battery jumpstarts, flat tyres, and scheduled maintenance.
-            </p>
-            <ul className="vp-features">
-              <li className="vp-features__item">
-                <div className="vp-features__icon-wrap">
-                  <Clock3 size={18} />
-                </div>
-                <div className="vp-features__text">
-                  <strong>Punctual</strong>
-                  <span>Always on time</span>
-                </div>
-              </li>
-              <li className="vp-features__item">
-                <div className="vp-features__icon-wrap">
-                  <ShieldCheck size={18} />
-                </div>
-                <div className="vp-features__text">
-                  <strong>Certified</strong>
-                  <span>100% vetted mechanics</span>
-                </div>
-              </li>
-              <li className="vp-features__item">
-                <div className="vp-features__icon-wrap">
-                  <Award size={18} />
-                </div>
-                <div className="vp-features__text">
-                  <strong>Upfront Pricing</strong>
-                  <span>Clear ₹ estimates</span>
-                </div>
-              </li>
-            </ul>
-            <div className="vp-hero__cta-wrap">
-              <button className="vp-btn" onClick={() => navigate('/booking')}>
-                Book Your Ride / Service Now <ArrowRight size={16} />
-              </button>
-              <button className="vp-btn-secondary" onClick={onCheckCar}>
-                Check My Car — Free <Wrench size={16} />
-              </button>
+            <div className="trust-item">
+              <div className="trust-icon">
+                <LockKeyhole size={16} />
+              </div>
+              <span>No card required</span>
             </div>
-            <p className="vp-hero__tagline">
-              Quick <span>•</span> Easy <span>•</span> Reliable
+            <div className="trust-item">
+              <div className="trust-icon">
+                <CheckCircle2 size={16} />
+              </div>
+              <span>Over 4,000 drivers helped</span>
+            </div>
+            <div className="trust-item">
+              <div className="trust-icon">
+                <Award size={16} />
+              </div>
+              <span>Vetted local mechanics</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Flagship Interactive 3D Vehicle Diagnostics Lab */}
+      <section className="vp-3d-showroom-section">
+        <div className="steps-container">
+          <div className="steps-head">
+            <span className="sec-label">INTERACTIVE 3D AUTO LAB</span>
+            <h2 className="sec-title">Explore Your Vehicle in 360° 3D</h2>
+            <p className="sec-sub">
+              Rotate 360°, inspect internal parts with X-Ray Diagnostics, and tap glowing hotspots to identify issues
+              and book repairs directly.
             </p>
           </div>
+          <CarShowroom3D
+            onSelectService={serviceTitle => {
+              navigate(`/booking?service=${encodeURIComponent(serviceTitle)}`);
+            }}
+            onCheckCar={onCheckCar}
+          />
+        </div>
+      </section>
 
-          <Tilt3DCard className="vp-hero-card-3d-wrap" maxTilt={8} scale={1.015}>
-            <div className="vp-hero-card">
-              <div className="vp-hero-card-header">
-                <h3 className="vp-hero-card-title">
-                  <Wrench size={18} /> Instant Fault Diagnostic
-                </h3>
-                <span className="vp-hero-card-badge">
-                  <CheckCircle2 size={12} /> 60-Sec Check
-                </span>
+      {/* 3. Authentic How It Works Section (Wrenchly.co.uk Style) */}
+      <section id="how-it-works" className="steps-section">
+        <div className="steps-container">
+          <div className="steps-head">
+            <span className="sec-label">HOW IT WORKS</span>
+            <h2 className="sec-title">From strange noise to fixed car in three simple steps.</h2>
+            <p className="sec-sub">
+              Simple, accurate, and completely free to use before you set foot in a garage.
+            </p>
+          </div>
+          <div className="steps-grid">
+            <Tilt3DCard maxTilt={8} scale={1.02}>
+              <div className="step-card" data-num="01">
+                <div className="step-num">STEP 01</div>
+                <div className="step-icon">
+                  <MessageCircle size={22} />
+                </div>
+                <h3>Answer guided questions</h3>
+                <p>
+                  Describe what you're noticing — strange noises, warning lights, smoke or starting issues. Our AI asks
+                  the exact questions an experienced mechanic would ask.
+                </p>
               </div>
-              <div className="vp-hero-card-car">
-                <div className="vp-hero-card-car-icon">
-                  <CarFront size={22} />
+            </Tilt3DCard>
+            <Tilt3DCard maxTilt={8} scale={1.02}>
+              <div className="step-card" data-num="02">
+                <div className="step-num">STEP 02</div>
+                <div className="step-icon">
+                  <Activity size={22} />
+                </div>
+                <h3>Get your instant AI report</h3>
+                <p>
+                  Receive an immediate breakdown with ranked likely causes, severity ratings, safe driving advice, and
+                  fair parts and labour cost estimates.
+                </p>
+              </div>
+            </Tilt3DCard>
+            <Tilt3DCard maxTilt={8} scale={1.02}>
+              <div className="step-card" data-num="03">
+                <div className="step-num">STEP 03</div>
+                <div className="step-icon">
+                  <ShieldCheck size={22} />
+                </div>
+                <h3>Book with total confidence</h3>
+                <p>
+                  Choose an upfront-priced mobile mechanic or verified partner garage to fix the exact issue without
+                  surprise quotes or unnecessary upsells.
+                </p>
+              </div>
+            </Tilt3DCard>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Authentic Features & Live Mock Report Split Section (Wrenchly.co.uk Style) */}
+      <section id="features" className="features-section">
+        <div className="steps-container">
+          <div className="steps-head" style={{ textAlign: 'left', marginBottom: 20 }}>
+            <span className="sec-label">WHAT YOU GET</span>
+            <h2 className="sec-title">Everything you need to know before visiting a mechanic.</h2>
+            <p className="sec-sub">
+              Clear, structured answers without automotive jargon or guesswork.
+            </p>
+          </div>
+          <div className="features-split">
+            <div className="feature-list">
+              <div className="feature-row">
+                <div className="feature-icon">
+                  <CheckCircle2 size={20} />
                 </div>
                 <div>
-                  <strong>Any Vehicle Make & Model</strong>
-                  <small>Select from 100+ car models in Bengaluru</small>
+                  <h4>Ranked likely causes</h4>
+                  <p>
+                    Not just one wild guess. You get a ranked probability list of what is actually causing the symptom
+                    based on your vehicle make and model.
+                  </p>
                 </div>
               </div>
-              <div className="vp-hero-symptoms">
-                <button className="vp-hero-symptom-btn" onClick={onCheckCar}>
-                  <span>Car won't start</span>
-                  <ArrowRight size={14} />
-                </button>
-                <button className="vp-hero-symptom-btn" onClick={onCheckCar}>
-                  <span>Warning light on</span>
-                  <ArrowRight size={14} />
-                </button>
-                <button className="vp-hero-symptom-btn" onClick={onCheckCar}>
-                  <span>Strange noise</span>
-                  <ArrowRight size={14} />
-                </button>
-                <button className="vp-hero-symptom-btn" onClick={onCheckCar}>
-                  <span>Flat tyre / Towing</span>
-                  <ArrowRight size={14} />
-                </button>
+              <div className="feature-row">
+                <div className="feature-icon">
+                  <AlertTriangle size={20} />
+                </div>
+                <div>
+                  <h4>Urgency & safety rating</h4>
+                  <p>
+                    Know immediately whether your vehicle is safe to drive home, safe for short trips, or requires
+                    immediate engine shutdown and roadside assistance.
+                  </p>
+                </div>
               </div>
-              <div className="vp-hero-card-footer">
-                <span>Verified local estimates & causes</span>
-                <button className="vp-ghost-btn" onClick={onCheckCar}>
-                  Start guided check →
-                </button>
+              <div className="feature-row">
+                <div className="feature-icon">
+                  <Award size={20} />
+                </div>
+                <div>
+                  <h4>Realistic repair cost benchmarks</h4>
+                  <p>
+                    Clear parts and labour estimates so you know exactly what a fair price looks like before talking to
+                    any mechanic.
+                  </p>
+                </div>
               </div>
-            </div>
-          </Tilt3DCard>
-        </div>
-      </section>
-
-      {/* Flagship Interactive 3D Vehicle Diagnostics Lab */}
-      <section className="vp-3d-showroom-section">
-        <div className="vp-section-head">
-          <span className="vp-kicker">INTERACTIVE 3D AUTO LAB</span>
-          <h2 className="vp-section-title">Explore Your Vehicle in Full 3D</h2>
-          <p className="vp-section-desc">
-            Rotate 360°, inspect parts with X-Ray Diagnostics, and tap glowing hotspots to identify issues and book repairs directly.
-          </p>
-        </div>
-        <CarShowroom3D
-          onSelectService={(serviceTitle) => {
-            navigate(`/booking?service=${encodeURIComponent(serviceTitle)}`);
-          }}
-          onCheckCar={onCheckCar}
-        />
-      </section>
-
-      {/* 2. Floating Search / Booking Panel - Valencia Pickup Style */}
-      <section className="vp-search-wrapper">
-        <div className="vp-search-panel">
-          <div className="vp-search-grid">
-            <div className="vp-field">
-              <label>
-                <MapPin size={13} /> Your Location
-              </label>
-              <div className="vp-input-wrap">
-                <MapPin size={16} />
-                <input
-                  value={query}
-                  onChange={e => setQuery(e.target.value)}
-                  placeholder="Enter area (e.g. Indiranagar, Koramangala)"
-                />
+              <div className="feature-row">
+                <div className="feature-icon">
+                  <Wrench size={20} />
+                </div>
+                <div>
+                  <h4>One-click verified booking</h4>
+                  <p>
+                    Connect with vetted mobile mechanics across Bengaluru who arrive with the right diagnostic tools and
+                    replacement parts ready.
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="vp-field">
-              <label>
-                <Wrench size={13} /> Service Needed
-              </label>
-              <select value={selectedService} onChange={e => setSelectedService(e.target.value)}>
-                <option>All services</option>
-                <option>Diagnostics</option>
-                <option>Oil change</option>
-                <option>Brake service</option>
-                <option>Battery & electrical</option>
-                <option>Tire service</option>
-                <option>EV diagnostics</option>
-              </select>
-            </div>
-            <div className="vp-field">
-              <label>
-                <Clock3 size={13} /> Urgency
-              </label>
-              <select value={selectedUrgency} onChange={e => setSelectedUrgency(e.target.value)}>
-                <option value="scheduled">Scheduled visit</option>
-                <option value="urgent">Urgent (within 1 hr)</option>
-                <option value="emergency">Emergency Roadside SOS</option>
-              </select>
-            </div>
-            <div className="vp-field">
-              <label>
-                <Navigation size={13} /> Search Radius
-              </label>
-              <select value={radius} onChange={e => setRadius(e.target.value)}>
-                <option value="5">Within 5 km</option>
-                <option value="15">Within 15 km</option>
-                <option value="30">Within 30 km</option>
-                <option value="50">Entire Bengaluru (50 km)</option>
-              </select>
-            </div>
-            <button className="vp-btn" onClick={() => document.getElementById('mechanics-directory')?.scrollIntoView({ behavior: 'smooth' })}>
-              Search Mechanics <Search size={15} />
-            </button>
-          </div>
 
-          <div className="vp-search-filter-row">
-            <div className="vp-filter-toggles">
-              <button
-                className={`vp-toggle-btn ${openOnly ? 'active' : ''}`}
-                onClick={() => setOpenOnly(!openOnly)}
-              >
-                <Check size={13} /> Open Now Only
-              </button>
-              <button
-                className={`vp-toggle-btn ${showAllMechanics ? 'active' : ''}`}
-                onClick={() => setShowAllMechanics(!showAllMechanics)}
-              >
-                <MapPin size={13} /> Show All Partner Garages
-              </button>
-              <button className="vp-toggle-btn" onClick={() => locateUser(false)}>
-                <Navigation size={13} /> {locationStatus === 'loading' ? 'Locating...' : 'Use My GPS'}
-              </button>
-            </div>
-            <span className="vp-results-count">
-              Showing <strong>{filteredMechanics.length}</strong> verified mechanics
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Services Section - Matching Valencia Pickup */}
-      <section className="vp-services-section">
-        <div className="vp-section-head">
-          <span className="vp-kicker">WHAT WE OFFER</span>
-          <h2 className="vp-section-title">OUR SERVICES</h2>
-          <p className="vp-section-desc">
-            From emergency breakdown assistance to complete engine diagnostics, enjoy reliable and comfortable automotive
-            care whenever you need it.
-          </p>
-        </div>
-        <div className="vp-services-grid">
-          {serviceCatalog.map(service => {
-            const Icon = service.icon;
-            return (
-              <Tilt3DCard key={service.id} className="vp-service-card-3d-wrapper" maxTilt={10} scale={1.02}>
-                <div className="vp-service-card">
-                  <div className="vp-service-card-top">
-                    <div className="vp-service-icon">
-                      <Icon size={24} />
+            {/* Interactive Mock Report Card */}
+            <Tilt3DCard maxTilt={6} scale={1.02}>
+              <div className="mock-report">
+                <div className="mock-bar">
+                  <span className="mock-bar-dot" style={{ background: '#ef4444' }} />
+                  <span className="mock-bar-dot" style={{ background: '#f59e0b' }} />
+                  <span className="mock-bar-dot" style={{ background: '#10b981' }} />
+                  <span className="mock-bar-title">WRENCHLY AI DIAGNOSTIC REPORT · 2022 CRETA</span>
+                </div>
+                <div className="mock-content">
+                  <div className="mock-cause">
+                    <span className="mock-cause-num">1</span>
+                    <span className="mock-cause-name">Alternator or Drive Belt Tensioner</span>
+                    <div className="mock-cause-pct">
+                      <span className="mock-cause-pct-lbl">PROBABILITY</span>
+                      82%
                     </div>
-                    <span className="vp-service-price">{service.price}</span>
                   </div>
-                  <h3>{service.title}</h3>
-                  <p>{service.desc}</p>
-                  <div className="vp-service-tags">
-                    {service.tags.map(tag => (
-                      <span key={tag}>{tag}</span>
-                    ))}
+                  <div className="mock-cause">
+                    <span className="mock-cause-num">2</span>
+                    <span className="mock-cause-name">12V Battery Terminal Oxidation</span>
+                    <div className="mock-cause-pct">
+                      <span className="mock-cause-pct-lbl">PROBABILITY</span>
+                      14%
+                    </div>
                   </div>
+                  <div className="mock-cause">
+                    <span className="mock-cause-num">3</span>
+                    <span className="mock-cause-name">Starter Solenoid Fuse Link</span>
+                    <div className="mock-cause-pct">
+                      <span className="mock-cause-pct-lbl">PROBABILITY</span>
+                      4%
+                    </div>
+                  </div>
+
+                  <div className="mock-row">
+                    <span className="lbl">Urgency Assessment</span>
+                    <span className="mock-badge badge-amber">
+                      <AlertTriangle size={12} /> Inspect within 24–48 hrs
+                    </span>
+                  </div>
+                  <div className="mock-row">
+                    <span className="lbl">Can I still drive it?</span>
+                    <span className="val" style={{ color: '#15803d' }}>Yes, safe for local short trips</span>
+                  </div>
+
+                  <div className="mock-box">
+                    <div className="mock-box-label">EXPERT ADVICE</div>
+                    <p>
+                      Avoid multiple jumpstarts if you hear an alternator whining noise. Driving with low charging voltage
+                      can deep-drain your battery cells.
+                    </p>
+                  </div>
+
+                  <div className="mock-cost">
+                    <div>
+                      <span className="lbl" style={{ display: 'block', fontSize: 11 }}>ESTIMATED REPAIR BENCHMARK</span>
+                      <span className="price">₹650 – ₹1,800</span>
+                    </div>
+                    <span className="tag">Visit & Diagnosis Included</span>
+                  </div>
+
                   <button
-                    className="vp-btn"
-                    style={{ width: '100%', marginTop: 'auto' }}
-                    onClick={() => navigate(`/booking?service=${encodeURIComponent(service.title)}`)}
+                    className="btn btn-primary"
+                    style={{ width: '100%', marginTop: 14 }}
+                    onClick={() => navigate('/booking?service=Diagnostics%20%26%20Electrical')}
                   >
-                    Book Service <ArrowRight size={14} />
+                    Fix This Issue Now <ArrowRight size={14} />
                   </button>
                 </div>
-              </Tilt3DCard>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* 4. How It Works Section - Valencia Pickup Style */}
-      <section className="vp-how-section">
-        <div className="vp-section-head">
-          <span className="vp-kicker">RIDE WITH EASE</span>
-          <h2 className="vp-section-title">How It Works</h2>
-          <p className="vp-section-desc">Booking your mechanic is simple, quick, and hassle-free.</p>
-        </div>
-        <div className="vp-how-grid">
-          <Tilt3DCard className="vp-how-card-3d-wrapper" maxTilt={8} scale={1.02}>
-            <div className="vp-how-card">
-              <div className="vp-how-card-num">01</div>
-              <h3>Tell Us What You Need</h3>
-              <p>
-                Choose your automotive service, share your location, or tap Emergency SOS when immediate roadside dispatch
-                cannot wait.
-              </p>
-            </div>
-          </Tilt3DCard>
-          <Tilt3DCard className="vp-how-card-3d-wrapper" maxTilt={8} scale={1.02}>
-            <div className="vp-how-card">
-              <div className="vp-how-card-num">02</div>
-              <h3>Choose With Confidence</h3>
-              <p>
-                Compare verified nearby mechanics, driver ratings, estimated arrival minutes, and upfront fixed pricing.
-              </p>
-            </div>
-          </Tilt3DCard>
-          <Tilt3DCard className="vp-how-card-3d-wrapper" maxTilt={8} scale={1.02}>
-            <div className="vp-how-card">
-              <div className="vp-how-card-num">03</div>
-              <h3>Get Moving Again</h3>
-              <p>
-                Track your mechanic in real time from dispatched to completed, communicate seamlessly, and pay securely.
-              </p>
-            </div>
-          </Tilt3DCard>
-        </div>
-      </section>
-
-      {/* 5. Directory & Live Map Section */}
-      <section id="mechanics-directory" className="vp-directory-section">
-        <div className="vp-directory-inner">
-          <div className="vp-directory-head">
-            <div>
-              <span className="vp-kicker">NEAR YOU</span>
-              <h2 className="vp-section-title" style={{ textAlign: 'left', margin: '4px 0 0' }}>
-                Find Your Trusted Mechanic
-              </h2>
-            </div>
-            <button className="vp-ghost-btn" onClick={() => setShowAllMechanics(!showAllMechanics)}>
-              {showAllMechanics ? 'Show Nearby Only' : 'View All Partner Locations'} <ArrowRight size={14} />
-            </button>
+              </div>
+            </Tilt3DCard>
           </div>
-          <div className="vp-directory-grid">
+        </div>
+      </section>
+
+      {/* 5. Navy Band with High-Impact Metrics */}
+      <section className="navy-band">
+        <div className="steps-container">
+          <div style={{ textAlign: 'center' }}>
+            <span className="sec-label">WHY DRIVERS TRUST WRENCHLY</span>
+            <h2 className="sec-title" style={{ color: '#fff' }}>
+              Built for drivers who want truth, transparency, and speed.
+            </h2>
+          </div>
+          <div className="navy-stats">
+            <div className="navy-stat">
+              <div className="num">40+</div>
+              <div className="lbl">Diagnostic Checkpoints Checked</div>
+            </div>
+            <div className="navy-stat">
+              <div className="num">60s</div>
+              <div className="lbl">Average Triage Report Speed</div>
+            </div>
+            <div className="navy-stat">
+              <div className="num">4.9★</div>
+              <div className="lbl">Driver Satisfaction Rating</div>
+            </div>
+            <div className="navy-stat">
+              <div className="num">100%</div>
+              <div className="lbl">Vetted & Identity Verified Pros</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Authentic Comparison: Chatbots vs Wrenchly */}
+      <section className="ai-compare-section">
+        <div className="steps-container">
+          <div className="steps-head">
+            <span className="sec-label">AI TAILORED FOR VEHICLES</span>
+            <h2 className="sec-title">Stop guessing with chatbots. Start solving with Wrenchly.</h2>
+            <p className="sec-sub">
+              Generic chatbots guess and give unstructured paragraphs. Wrenchly delivers structured automotive decision trees.
+            </p>
+          </div>
+          <div className="ai-compare-table">
+            <div className="ai-compare-header">
+              <div>DIAGNOSTIC CAPABILITY</div>
+              <div>GENERIC AI CHATBOTS</div>
+              <div className="col-wrenchly">WRENCHLY AI MECHANIC</div>
+            </div>
+            <div className="ai-compare-row">
+              <div className="ai-feature-name">Symptom Interview</div>
+              <div className="ai-chatbot-col">
+                <X size={15} color="#ef4444" /> Unstructured free-text guessing
+              </div>
+              <div className="ai-wrenchly-col">
+                <Check size={16} color="#30A5BF" /> Adaptive automotive decision tree
+              </div>
+            </div>
+            <div className="ai-compare-row">
+              <div className="ai-feature-name">Fault Code & Sensor Mapping</div>
+              <div className="ai-chatbot-col">
+                <X size={15} color="#ef4444" /> Hallucinates false OBD-II codes
+              </div>
+              <div className="ai-wrenchly-col">
+                <Check size={16} color="#30A5BF" /> Real ECU sensor benchmark library
+              </div>
+            </div>
+            <div className="ai-compare-row">
+              <div className="ai-feature-name">Upfront Price Transparency</div>
+              <div className="ai-chatbot-col">
+                <X size={15} color="#ef4444" /> No local price intelligence
+              </div>
+              <div className="ai-wrenchly-col">
+                <Check size={16} color="#30A5BF" /> Verified parts & labour price guides
+              </div>
+            </div>
+            <div className="ai-compare-row">
+              <div className="ai-feature-name">Mechanic Dispatch</div>
+              <div className="ai-chatbot-col">
+                <X size={15} color="#ef4444" /> Cannot dispatch help
+              </div>
+              <div className="ai-wrenchly-col">
+                <Check size={16} color="#30A5BF" /> 1-Click doorstep mobile mechanic dispatch
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Search & Directory of Verified Mechanics */}
+      <section id="mechanics-directory" className="vp-search-wrapper" style={{ padding: '60px 0 20px' }}>
+        <div className="steps-container">
+          <div className="steps-head" style={{ textAlign: 'left', marginBottom: 24 }}>
+            <span className="sec-label">FIND YOUR MECHANIC</span>
+            <h2 className="sec-title">Book Top-Rated Mechanics in Bengaluru</h2>
+            <p className="sec-sub">
+              Search vetted garages and mobile technicians near your area with live GPS tracking.
+            </p>
+          </div>
+
+          <div className="vp-search-panel" style={{ marginTop: 0 }}>
+            <div className="vp-search-grid">
+              <div className="vp-field">
+                <label>
+                  <MapPin size={13} /> Your Location
+                </label>
+                <div className="vp-input-wrap">
+                  <MapPin size={16} />
+                  <input
+                    value={query}
+                    onChange={e => setQuery(e.target.value)}
+                    placeholder="Enter area (e.g. Indiranagar, Koramangala)"
+                  />
+                </div>
+              </div>
+              <div className="vp-field">
+                <label>
+                  <Wrench size={13} /> Service Needed
+                </label>
+                <select value={selectedService} onChange={e => setSelectedService(e.target.value)}>
+                  <option>All services</option>
+                  <option>Diagnostics</option>
+                  <option>Oil change</option>
+                  <option>Brake service</option>
+                  <option>Battery & electrical</option>
+                  <option>Tire service</option>
+                  <option>EV diagnostics</option>
+                </select>
+              </div>
+              <div className="vp-field">
+                <label>
+                  <Clock3 size={13} /> Urgency
+                </label>
+                <select value={selectedUrgency} onChange={e => setSelectedUrgency(e.target.value)}>
+                  <option value="scheduled">Scheduled visit</option>
+                  <option value="urgent">Urgent (within 1 hr)</option>
+                  <option value="emergency">Emergency Roadside SOS</option>
+                </select>
+              </div>
+              <div className="vp-field">
+                <label>
+                  <Navigation size={13} /> Search Radius
+                </label>
+                <select value={radius} onChange={e => setRadius(e.target.value)}>
+                  <option value="5">Within 5 km</option>
+                  <option value="15">Within 15 km</option>
+                  <option value="30">Within 30 km</option>
+                  <option value="50">Entire Bengaluru (50 km)</option>
+                </select>
+              </div>
+              <button
+                className="btn btn-primary"
+                onClick={() =>
+                  document.getElementById('mechanics-directory')?.scrollIntoView({ behavior: 'smooth' })
+                }
+              >
+                Search <Search size={15} />
+              </button>
+            </div>
+
+            <div className="vp-search-filter-row">
+              <div className="vp-filter-toggles">
+                <button
+                  className={`vp-toggle-btn ${openOnly ? 'active' : ''}`}
+                  onClick={() => setOpenOnly(!openOnly)}
+                >
+                  <Check size={13} /> Open Now Only
+                </button>
+                <button
+                  className={`vp-toggle-btn ${showAllMechanics ? 'active' : ''}`}
+                  onClick={() => setShowAllMechanics(!showAllMechanics)}
+                >
+                  <MapPin size={13} /> Show All Partner Garages
+                </button>
+                <button className="vp-toggle-btn" onClick={() => locateUser(false)}>
+                  <Navigation size={13} /> {locationStatus === 'loading' ? 'Locating...' : 'Use My GPS'}
+                </button>
+              </div>
+              <span className="vp-results-count">
+                Showing <strong>{filteredMechanics.length}</strong> verified mechanics
+              </span>
+            </div>
+          </div>
+
+          <div className="vp-directory-grid" style={{ marginTop: 28 }}>
             <div className="vp-mechanic-list">
               {filteredMechanics.map(m => (
                 <Tilt3DCard key={m.id} className="vp-mechanic-card-3d-wrapper" maxTilt={6} scale={1.015}>
@@ -885,7 +1070,7 @@ function HomePage({ user, mechanics, userLocation, locationStatus, locateUser, o
                     <div className="vp-mechanic-body">
                       <div className="vp-mechanic-title-row">
                         <h3>
-                          {m.name} {m.verified && <ShieldCheck size={16} color="#004f9c" />}
+                          {m.name} {m.verified && <ShieldCheck size={16} color="#30A5BF" />}
                         </h3>
                         <div className="vp-rating">
                           <Star size={13} fill="currentColor" /> {m.rating} <span>({m.reviews})</span>
@@ -895,7 +1080,7 @@ function HomePage({ user, mechanics, userLocation, locationStatus, locateUser, o
                       <div className="vp-mechanic-meta">
                         <span><MapPin size={13} /> {m.distance}</span>
                         <span><Clock3 size={13} /> {m.minutes} mins away</span>
-                        <strong>{m.price}</strong>
+                        <strong style={{ color: 'var(--teal)' }}>{m.price}</strong>
                       </div>
                       <div className="vp-mechanic-services">
                         {m.services.map(s => (
@@ -903,10 +1088,10 @@ function HomePage({ user, mechanics, userLocation, locationStatus, locateUser, o
                         ))}
                       </div>
                       <div className="vp-mechanic-actions">
-                        <Link to={`/mechanics/${m.id}`} className="vp-ghost-btn">
-                          View profile <ArrowRight size={14} />
+                        <Link to={`/mechanics/${m.id}`} className="btn btn-ghost" style={{ fontSize: 12, padding: '7px 14px' }}>
+                          View profile <ArrowRight size={13} />
                         </Link>
-                        <button className="vp-btn-sm" onClick={() => onBook(m)}>
+                        <button className="btn btn-primary" style={{ fontSize: 12, padding: '7px 16px' }} onClick={() => onBook(m)}>
                           Book Mechanic
                         </button>
                       </div>
@@ -922,123 +1107,138 @@ function HomePage({ user, mechanics, userLocation, locationStatus, locateUser, o
         </div>
       </section>
 
-      {/* 6. The Wrenchly Standard / Trust Section */}
-      <section className="vp-trust-section">
-        <div className="vp-section-head">
-          <span className="vp-kicker">THE WRENCHLY STANDARD</span>
-          <h2 className="vp-section-title">Car Care Without the Guesswork</h2>
-          <p className="vp-section-desc">
-            Every interaction is built to feel clear, reliable, and dependable — from your first booking to the completed repair.
-          </p>
-        </div>
-        <div className="vp-trust-grid">
-          <Tilt3DCard className="vp-trust-card-3d-wrapper" maxTilt={8} scale={1.02}>
-            <div className="vp-trust-card">
-              <div className="vp-trust-icon"><ShieldCheck size={22} /></div>
-              <h3>People You Can Trust</h3>
-              <p>Every mechanic is background checked, identity verified, and rated by real drivers.</p>
-            </div>
-          </Tilt3DCard>
-          <Tilt3DCard className="vp-trust-card-3d-wrapper" maxTilt={8} scale={1.02}>
-            <div className="vp-trust-card">
-              <div className="vp-trust-icon"><Gauge size={22} /></div>
-              <h3>Prices Made Clear</h3>
-              <p>See transparent visit fees and repair estimates before any physical work starts. Always.</p>
-            </div>
-          </Tilt3DCard>
-          <Tilt3DCard className="vp-trust-card-3d-wrapper" maxTilt={8} scale={1.02}>
-            <div className="vp-trust-card">
-              <div className="vp-trust-icon"><Clock3 size={22} /></div>
-              <h3>Live Progress Tracking</h3>
-              <p>Know exactly where your mechanic is, from dispatched to diagnosed to back on the road.</p>
-            </div>
-          </Tilt3DCard>
-          <Tilt3DCard className="vp-trust-card-3d-wrapper" maxTilt={8} scale={1.02}>
-            <div className="vp-trust-card">
-              <div className="vp-trust-icon"><Zap size={22} /></div>
-              <h3>24/7 Roadside SOS</h3>
-              <p>Instant broadcast dispatch to the nearest available mechanic when you need towing or jumpstarts.</p>
-            </div>
-          </Tilt3DCard>
-        </div>
-      </section>
-
-      {/* 7. Reviews Section */}
-      <section className="vp-reviews-section">
-        <div className="vp-section-head">
-          <span className="vp-kicker">WHAT DRIVERS SAY</span>
-          <h2 className="vp-section-title">Real Drivers. Real Peace of Mind.</h2>
-          <p className="vp-section-desc">Trusted by over 4,000+ vehicle owners in Bengaluru every month.</p>
-        </div>
-        <div className="vp-reviews-grid">
-          <div className="vp-review-card">
-            <div className="vp-review-stars">★★★★★</div>
-            <p className="vp-review-text">
-              “My car battery died on the Outer Ring Road. I used Wrenchly Emergency SOS, and a mechanic arrived with
-              the right battery tools in under 14 minutes. Incredible service!”
+      {/* 8. Comprehensive Services Catalog */}
+      <section className="vp-services-section">
+        <div className="steps-container">
+          <div className="steps-head">
+            <span className="sec-label">WHAT WE OFFER</span>
+            <h2 className="sec-title">Comprehensive Automotive Care</h2>
+            <p className="sec-sub">
+              From roadside emergency assistance to engine diagnostics, enjoy dependable automotive care.
             </p>
-            <div className="vp-review-author">
-              <div className="vp-review-avatar">PS</div>
-              <div>
-                <strong>Priya Sharma</strong>
-                <small>Indiranagar, Bengaluru · Hyundai Creta</small>
-              </div>
-            </div>
           </div>
-          <div className="vp-review-card">
-            <div className="vp-review-stars">★★★★★</div>
-            <p className="vp-review-text">
-              “Upfront ₹850 pricing was transparent and clear. The mechanic inspected the brake sensors and fixed the
-              issue right at my apartment parking. No towing needed!”
-            </p>
-            <div className="vp-review-author">
-              <div className="vp-review-avatar">RM</div>
-              <div>
-                <strong>Rahul Menon</strong>
-                <small>Koramangala, Bengaluru · Tata Nexon</small>
-              </div>
-            </div>
-          </div>
-          <div className="vp-review-card">
-            <div className="vp-review-stars">★★★★★</div>
-            <p className="vp-review-text">
-              “The free car diagnostic checker helped me describe the sound before booking. The pro came fully prepared
-              with replacement parts.”
-            </p>
-            <div className="vp-review-author">
-              <div className="vp-review-avatar">AK</div>
-              <div>
-                <strong>Ananya Kulkarni</strong>
-                <small>Whitefield, Bengaluru · Maruti Brezza</small>
-              </div>
-            </div>
+          <div className="vp-services-grid">
+            {serviceCatalog.map(service => {
+              const Icon = service.icon;
+              return (
+                <Tilt3DCard key={service.id} className="vp-service-card-3d-wrapper" maxTilt={10} scale={1.02}>
+                  <div className="vp-service-card">
+                    <div className="vp-service-card-top">
+                      <div className="vp-service-icon">
+                        <Icon size={24} />
+                      </div>
+                      <span className="vp-service-price">{service.price}</span>
+                    </div>
+                    <h3>{service.title}</h3>
+                    <p>{service.desc}</p>
+                    <div className="vp-service-tags">
+                      {service.tags.map(tag => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </div>
+                    <button
+                      className="btn btn-primary"
+                      style={{ width: '100%', marginTop: 'auto' }}
+                      onClick={() => navigate(`/booking?service=${encodeURIComponent(service.title)}`)}
+                    >
+                      Book Service <ArrowRight size={14} />
+                    </button>
+                  </div>
+                </Tilt3DCard>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* 8. Pre-footer / Get in Touch - Valencia Pickup Style */}
-      <section className="vp-prefooter-banner">
-        <div className="vp-prefooter-inner">
-          <span className="vp-kicker">GET IN TOUCH</span>
-          <h2>We Are Open for Your Questions!</h2>
-          <p>
-            Feel free to communicate with our roadside dispatch team or book your certified mechanic online in seconds.
-          </p>
-          <div className="vp-prefooter-actions">
-            <a
-              href="https://wa.me/919876543210?text=Hello%20Wrenchly%2C%20I%20need%20assistance%20with%20my%20car"
-              target="_blank"
-              rel="noreferrer"
-              className="vp-whatsapp-btn"
-            >
-              <MessageCircle size={18} /> Chat on WhatsApp
-            </a>
-            <a href="tel:+919876543210" className="vp-white-btn">
-              <Phone size={18} /> Call +91 98765 43210
-            </a>
-            <button className="vp-btn" onClick={() => navigate('/booking')}>
-              Book Online Now <ArrowRight size={16} />
-            </button>
+      {/* 9. Authentic Reviews Carousel (Wrenchly.co.uk Style) */}
+      <section id="reviews" className="carousel-section">
+        <div className="steps-container">
+          <div style={{ textAlign: 'center' }}>
+            <span className="sec-label">WHAT DRIVERS SAY</span>
+            <h2 className="sec-title" style={{ color: '#fff' }}>
+              Real Drivers. Real Peace of Mind.
+            </h2>
+            <p className="sec-sub" style={{ color: 'rgba(255,255,255,0.6)', margin: '0 auto' }}>
+              Trusted by over 4,000+ vehicle owners in Bengaluru every month.
+            </p>
+          </div>
+
+          <div className="carousel-outer">
+            <div className="carousel-track-wrap">
+              <div
+                className="carousel-track"
+                style={{
+                  transform: `translateX(-${reviewIndex * 33.333}%)`
+                }}
+              >
+                {driverReviews.map((rev, i) => (
+                  <div key={i} className="review-card">
+                    <div className="stars">{rev.stars}</div>
+                    <blockquote>“{rev.text}”</blockquote>
+                    <div className="reviewer">
+                      <div className="avatar">{rev.name.slice(0, 2).toUpperCase()}</div>
+                      <div>
+                        <div className="reviewer-name">{rev.name}</div>
+                        <div className="reviewer-loc">{rev.location}</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="carousel-controls">
+              <button
+                type="button"
+                className="carousel-btn"
+                disabled={reviewIndex === 0}
+                onClick={() => setReviewIndex(Math.max(0, reviewIndex - 1))}
+              >
+                ←
+              </button>
+              <div className="carousel-dots">
+                {driverReviews.slice(0, 2).map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    className={`carousel-dot ${reviewIndex === i ? 'active' : ''}`}
+                    onClick={() => setReviewIndex(i)}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                className="carousel-btn"
+                disabled={reviewIndex >= 1}
+                onClick={() => setReviewIndex(Math.min(1, reviewIndex + 1))}
+              >
+                →
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 10. Authentic Final CTA Banner (Wrenchly.co.uk Style) */}
+      <section className="cta-section">
+        <div className="steps-container">
+          <div className="cta-box">
+            <h2>Stop guessing. Start knowing.</h2>
+            <p>
+              Answer guided questions about your vehicle symptoms and get your free AI diagnosis report in under 60 seconds.
+            </p>
+            <div className="cta-btns">
+              <button className="btn btn-primary btn-xl" onClick={onCheckCar}>
+                Get Free Diagnostic Report <ArrowRight size={16} />
+              </button>
+              <button className="btn btn-dark btn-xl" onClick={() => navigate('/booking')}>
+                Book a Verified Mechanic <Wrench size={16} />
+              </button>
+            </div>
+            <div className="cta-note">
+              100% Free · <span>No credit card required</span> · Instant Triage Results
+            </div>
           </div>
         </div>
       </section>
@@ -2792,58 +2992,58 @@ function Footer({ onAdminAccess }) {
             Wrenchly
           </h4>
           <p>
-            Valencia & Bengaluru's trusted on-demand automotive network. Connecting vehicle owners with verified mechanics,
-            transparent pricing, and rapid roadside dispatch.
+            Wrenchly — Free AI car fault diagnosis and verified mechanic network. Connecting drivers with instant triage,
+            transparent repair benchmarks, and rapid roadside dispatch.
           </p>
           <p style={{ color: '#64748b', fontSize: 12 }}>
             Helpline: +91 98765 43210<br />
-            Email: support@wrenchly.com<br />
-            12th Main Road, Indiranagar, Bengaluru
+            Email: support@wrenchly.co.uk<br />
+            Indiranagar & Across Bengaluru
           </p>
         </div>
         <div className="vp-footer-col">
-          <h5>Quick Links</h5>
+          <h5>Navigation</h5>
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/booking">Booking</Link></li>
-            <li><Link to="/services">Services</Link></li>
-            <li><Link to="/how-it-works">How It Works</Link></li>
-            <li><Link to="/about">About Us</Link></li>
-            <li><Link to="/contact">Contact Us</Link></li>
+            <li><a href="/#how-it-works">How It Works</a></li>
+            <li><a href="/#features">What You Get</a></li>
+            <li><Link to="/booking">Book a Mechanic</Link></li>
+            <li><a href="/#reviews">Driver Reviews</a></li>
+            <li><Link to="/appointments">My Garage</Link></li>
           </ul>
         </div>
         <div className="vp-footer-col">
-          <h5>Our Services</h5>
+          <h5>Diagnosis & Care</h5>
           <ul>
-            <li><Link to="/booking?service=Diagnostics">Diagnostics</Link></li>
-            <li><Link to="/booking?service=Battery">Battery Jumpstart</Link></li>
-            <li><Link to="/booking?service=Brakes">Brake Repair</Link></li>
-            <li><Link to="/booking?service=Tire">Flat Tyre Support</Link></li>
-            <li><Link to="/booking?service=Oil">Engine Oil Service</Link></li>
-            <li><Link to="/booking?service=EV">EV & Hybrid Care</Link></li>
+            <li><Link to="/booking?service=Diagnostics%20%26%20Electrical">OBD-II Diagnostics</Link></li>
+            <li><Link to="/booking?service=Battery%20%26%20Jumpstart">Battery & Jumpstart</Link></li>
+            <li><Link to="/booking?service=Brakes%20%26%20Suspension">Brakes & Suspension</Link></li>
+            <li><Link to="/booking?service=Flat%20Tyre%20%26%20Wheel%20Service">Tyre & Punctures</Link></li>
+            <li><Link to="/booking?service=Engine%20%26%20Oil%20Service">Engine & Fluids</Link></li>
+            <li><Link to="/booking?service=EV%20%26%20Hybrid%20Care">EV & Hybrid Care</Link></li>
           </ul>
         </div>
         <div className="vp-footer-col">
           <h5>Partners & Admin</h5>
           <ul>
-            <li><Link to="/mechanic">Mechanic Cockpit</Link></li>
+            <li><Link to="/mechanic">Mechanic Partner Cockpit</Link></li>
             <li><button onClick={onAdminAccess} style={{ textAlign: 'left', padding: 0 }}>Admin Portal</button></li>
-            <li><Link to="/appointments">My Garage</Link></li>
+            <li><Link to="/appointments">My Appointments</Link></li>
             <li><a href="https://wa.me/919876543210" target="_blank" rel="noreferrer">WhatsApp Help</a></li>
           </ul>
         </div>
         <div className="vp-footer-col">
-          <h5>Terms & Info</h5>
+          <h5>Trust & Safety</h5>
           <ul>
-            <li><Link to="/about">Safety Standard</Link></li>
+            <li><Link to="/about">Diagnostic Accuracy Guarantee</Link></li>
             <li><Link to="/about">Privacy Policy</Link></li>
             <li><Link to="/about">Terms of Service</Link></li>
-            <li><Link to="/about">Refund Policy</Link></li>
+            <li><Link to="/about">Vetted Mechanic Standards</Link></li>
           </ul>
         </div>
       </div>
       <div className="vp-footer-bottom">
-        <span>© 2026 Wrenchly Auto Care. All rights reserved. Designed with Valencia Pickup standard.</span>
+        <span>© 2026 Wrenchly. Free AI Car Fault Diagnosis & On-Demand Mechanic Network.</span>
         <span>24/7 Roadside Assistance & Garage Network</span>
       </div>
     </footer>
