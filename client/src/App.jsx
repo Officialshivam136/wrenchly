@@ -18,7 +18,7 @@ import DispatchTracker3D from './components/DispatchTracker3D';
 import Vehicle3DPreview from './components/Vehicle3DPreview';
 import { Floating3DGear, Floating3DPiston } from './components/Floating3DToolBadge';
 
-const API = 'http://localhost:5000/api';
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 async function request(path, options = {}) {
   const token = localStorage.getItem('wrenchly_token');

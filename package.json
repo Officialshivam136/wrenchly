@@ -7,9 +7,14 @@
     "server": "npm --prefix server run dev",
     "client": "npm --prefix client run dev",
     "build": "npm --prefix client run build",
+    "build:apk": "npm --prefix client run build:apk",
     "install:all": "npm install && npm --prefix server install && npm --prefix client install"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.6.0",
+    "@capacitor/core": "^8.6.0"
   }
 }

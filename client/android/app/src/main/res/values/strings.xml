@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Wrenchly</string>
+    <string name="title_activity_main">Wrenchly</string>
+    <string name="package_name">com.wrenchly.app</string>
+    <string name="custom_url_scheme">com.wrenchly.app</string>
+</resources>
